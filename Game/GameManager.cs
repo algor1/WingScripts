@@ -77,7 +77,6 @@ using SpaceObjects;
 
                 switch (message.Tag)
                 {
-                    // New friend request received
                     case GameTags.NearestSpaceObjects:
                         {
                             using (var reader = message.GetReader())
@@ -91,22 +90,21 @@ using SpaceObjects;
                             }
                             break;
                         }
-
-                    case FriendTags.RequestSuccess:
+                   case GameTags.PlayerShipData:
+                    {
+                        using (var reader = message.GetReader())
                         {
-                            using (var reader = message.GetReader())
-                            {
-                                var friendName = reader.ReadString();
-                                ChatManager.ServerMessage("Friend request sent.", MessageType.Info);
+                            ShipData playerShipData = reader.ReadSerializable<ShipData>();
 
-                                //onSuccessfulFriendRequest?.Invoke(friendName);
-                            }
-                            break;
+                            Debug.Log($"Player ship data recieved" + playerShipData.VisibleName);
+                            //ChatManager.ServerMessage(friendName + " wants to add you as a friend!", MessageType.Info);
+                            Debug.Log( onPlayerShipData.GetInvocationList().Length);
+                            onPlayerShipData?.Invoke(playerShipData);
                         }
-
+                        break;
+                    }
                 }
             }
-
         }
     }
 //}

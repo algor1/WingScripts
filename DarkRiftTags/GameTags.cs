@@ -9,5 +9,6 @@
         public const ushort MoveToTarget = 2 + Shift;
         public const ushort NearestSpaceObjects = 3 + Shift;
         public const ushort MessageFailed = 4 + Shift;
+        public const ushort PlayerShipData = 5 + Shift;
     }
 }

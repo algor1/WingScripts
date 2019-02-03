@@ -50,7 +50,8 @@ namespace Menus
 
         public void StartGame()
         {
-            GameManager.SendPlayerInit();
+            SceneManager.LoadScene("Space");
+
         }
 
         public void Quit()
