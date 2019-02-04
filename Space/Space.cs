@@ -5,8 +5,7 @@ using SpaceObjects;
 
 public class Space : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject player;
+    public GameObject Player;
     private Vector3 zeroPoint =  Vector3.zero;
 
 
@@ -24,11 +23,11 @@ public class Space : MonoBehaviour
     void CreatePlayer(ShipData shipData)
     {
         Debug.Log("creating player...");
-        if (player == null)
+        if (Player == null)
         {
             Debug.Log("player prefub " + shipData.Prefab);
-            player = (GameObject)Instantiate(Resources.Load(shipData.Prefab, typeof(GameObject)), shipData.Position - zeroPoint, shipData.Rotation);
-            ShipMotor shipMotor = player.AddComponent<ShipMotor>() as ShipMotor;
+            Player = (GameObject)Instantiate(Resources.Load(shipData.Prefab, typeof(GameObject)), shipData.Position - zeroPoint, shipData.Rotation);
+            ShipMotor shipMotor = Player.AddComponent<ShipMotor>() as ShipMotor;
             shipMotor.Init(shipData, this.gameObject);
             //gObj.GetComponent<ShipMotor>().thisShip.SetTarget(player.GetComponent<ShipMotor>().thisShip.p.SO);
             //Debug.Log(ship.p.SO.visibleName);
