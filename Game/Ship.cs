@@ -37,8 +37,8 @@ namespace SpaceObjects
         public bool warpCoroutineStarted;
         //public bool landed;
         private bool atackAI;
-        private SO_weapon[] weapons;
-        private SO_equipment[] equipments;
+        private Weapon[] weapons;
+        private Equipment[] equipments;
         
         public int TickDeltaTime=20; //{get;set;}
 
@@ -56,16 +56,16 @@ namespace SpaceObjects
             //SendEvent(ShipEvenentsType.move);
             //host = _host;
             //newtargetToMove = null;
-            weapons = new SO_weapon[shipData.Weapons.Length];
+            weapons = new Weapon[shipData.Weapons.Length];
             for (int i = 0; i < shipData.Weapons.Length; i++)
             {
-                weapons[i] = new SO_weapon(shipData.Weapons[i], this);
+                weapons[i] = new Weapon(shipData.Weapons[i], this);
                 
             }
-            equipments = new SO_equipment[shipData.Equipments.Length];
+            equipments = new Equipment[shipData.Equipments.Length];
             for (int i = 0; i < shipData.Equipments.Length; i++)
             {
-                equipments[i] = new SO_equipment(shipData.Equipments[i], this);
+                equipments[i] = new Equipment(shipData.Equipments[i], this);
             }
         }
 

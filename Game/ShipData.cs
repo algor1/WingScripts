@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DarkRift;
-using UnityEngine;
+using UnityEngine; 
 
 namespace SpaceObjects
 {
@@ -40,8 +40,8 @@ namespace SpaceObjects
 
         public float WarpDriveStartTime { get; set; }
         public float WarpSpeed { get; set; }
-        public SO_weaponData[] Weapons { get; set; }
-        public SO_equipmentData[] Equipments{get; set;}
+        public WeaponData[] Weapons { get; set; }
+        public EquipmentData[] Equipments{get; set;}
 
 
         public ShipData():base()
@@ -83,19 +83,19 @@ namespace SpaceObjects
             WarpDriveStartTime = value.WarpDriveStartTime;
             WarpSpeed = value.WarpSpeed;
             
-            Weapons = new SO_weaponData[value.Weapons.Length];
+            Weapons = new WeaponData[value.Weapons.Length];
             for (int i = 0; i < value.Weapons.Length; i++)
 			{
-                Weapons[i] = new SO_weaponData (value.Weapons[i]);
+                Weapons[i] = new WeaponData (value.Weapons[i]);
 			}
 
-            Equipments = new SO_equipmentData[value.Equipments.Length];
+            Equipments = new EquipmentData[value.Equipments.Length];
             for (int i = 0; i < value.Equipments.Length; i++)
             {
-                Equipments[i] = new SO_equipmentData(value.Equipments[i]);
+                Equipments[i] = new EquipmentData(value.Equipments[i]);
             }
         }
-        public new void Deserialize(DeserializeEvent e)
+        public void Deserialize(DeserializeEvent e)
         {
             Id = e.Reader.ReadInt32();
             VisibleName = e.Reader.ReadString();
@@ -135,9 +135,11 @@ namespace SpaceObjects
 
             WarpDriveStartTime = e.Reader.ReadSingle();
             WarpSpeed = e.Reader.ReadSingle();
+            Weapons = e.Reader.ReadSerializables<WeaponData>();
+            Equipments = e.Reader.ReadSerializables<EquipmentData>();
         }
 
-        public new void Serialize(SerializeEvent e)
+        public void Serialize(SerializeEvent e)
         {
             e.Writer.Write(Id);
             e.Writer.Write(VisibleName);
@@ -182,6 +184,9 @@ namespace SpaceObjects
 
             e.Writer.Write(WarpDriveStartTime);
             e.Writer.Write(WarpSpeed);
+            e.Writer.Write(Weapons);
+            e.Writer.Write(Equipments);
+
         }
 
 
