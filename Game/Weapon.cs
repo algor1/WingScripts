@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace SpaceObjects
 {
-    public class SO_weapon
+    public class Weapon
     {
-        public SO_weaponData p; //weapon properties
+        public WeaponData p; //weapon properties
 
         private Ship currentTarget;
         private SpaceObject mineTarget;
@@ -17,9 +17,9 @@ namespace SpaceObjects
         public Coroutine atack_co;
         public bool activated;
 
-        public SO_weapon(SO_weaponData _data, Ship _host)
+        public Weapon(WeaponData _data, Ship _host)
         {
-            p = new SO_weaponData(_data);
+            p = new WeaponData(_data);
             host = _host;
             activated = false;
             fire = false;
@@ -86,7 +86,7 @@ namespace SpaceObjects
                         
                             yield return new WaitForSeconds(2);
 
-                            if (p.Type == SO_weaponData.WeaponType.laser)
+                            if (p.Type == WeaponData.WeaponType.laser)
                             {
                                 yield return new WaitForSeconds(p.ActiveTime);
                             }

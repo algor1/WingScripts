@@ -4,9 +4,9 @@ using UnityEngine;
 namespace SpaceObjects
 {
 
-    public class SO_equipment
+    public class Equipment
     {
-        public SO_equipmentData p; //equipment properties
+        public EquipmentData p; //equipment properties
 
         private Ship currentTarget;
         private Ship host;
@@ -15,9 +15,9 @@ namespace SpaceObjects
         public Coroutine use_co;
 
 
-        public SO_equipment(SO_equipmentData _data, Ship _host)
+        public Equipment(EquipmentData _data, Ship _host)
         {
-            p = new SO_equipmentData(_data);
+            p = new EquipmentData(_data);
             host = _host;
             activate = false;
             coroutineStarted = false;
