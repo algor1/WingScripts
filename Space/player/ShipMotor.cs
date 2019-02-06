@@ -97,18 +97,18 @@ public class ShipMotor : MonoBehaviour {
 
     #region UserCommands
 
-    //   public void SetTarget(SpaceObject tg)
-    //{
-    //	thisShip.SetTarget(tg);
-    //}
+       public void SetTarget(SpaceObject tg)
+    {
+    	thisShip.SetTarget(tg);
+    }
 
 
-    //public void GoTotarget()
-    //   {
-    //	thisShip.GoToTarget ();
-    //	Server_GO.GetComponent<Server> ().PlayerControl(0,Server.Command.MoveTo,0);
+    public void GoTotarget()
+       {
+    	thisShip.GoToTarget ();
+    	//Server_GO.GetComponent<Server> ().PlayerControl(0,Server.Command.MoveTo,0);
 
-    //   }
+       }
     //   public void WarpTotarget()
 
     //   {

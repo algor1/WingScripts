@@ -41,7 +41,7 @@ namespace SpaceObjects
         public Equipment[] Equipments;
         
         public int TickDeltaTime=20; //{get;set;}
-        public int RestoreTickDeltaTime=3000; //TODO store it from shipdata
+        public int restoreTickDeltaTime = 3000; //TODO store it from shipdata
 
 
 
@@ -139,6 +139,27 @@ namespace SpaceObjects
 #endregion
 
 #region user commands
+
+        public void GetCommand(Command command, SpaceObject target=null,int point_id=0)
+        {
+            switch (command)
+            {
+                case Command.MoveTo:
+                    if (target == null)
+                    {
+                        GoToTarget();
+                        break;
+                    }
+                    SetTarget(target);
+                    GoToTarget();
+                    break;
+                case Command.SetTarget:
+                    SetTarget(target);
+                    break;
+            }
+        }
+
+
         public void SetTarget(SpaceObject newTarget)
         {
             NewTargetToMove = newTarget;

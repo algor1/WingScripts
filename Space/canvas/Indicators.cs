@@ -23,7 +23,7 @@ public class Indicators : MonoBehaviour {
 	private List<GameObject> indicatorsList_so  ; 
 
 
-	private Dictionary<int,GameObject> nearestShips;
+	//private Dictionary<int,GameObject> nearestShips;
 
 
 
@@ -36,9 +36,10 @@ public class Indicators : MonoBehaviour {
 	// Use this for initialization
 	void Start()
 	{
-		wpList= spaceManager.GetComponent<Space>().wpList;
-//		nearestShips = dataLocal.GetComponent<ShowEnv> ().nearestShips;
-		CreateIndicators_wp ();
+        //wpList= spaceManager.GetComponent<Space>().wpList;
+        //		nearestShips = dataLocal.GetComponent<ShowEnv> ().nearestShips;
+        //CreateIndicators_wp ();
+        playerobj = spaceManager.GetComponent<Space>().Player;
 
 
 	}
@@ -46,7 +47,7 @@ public class Indicators : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		UpdateIndicators_wp ();
+		//UpdateIndicators_wp ();
 		UpdateIndicators_sh ();
 		//UpdateIndicators_so ();
 
@@ -85,7 +86,7 @@ public class Indicators : MonoBehaviour {
 	public void AddIndicator_sh(GameObject linkObj){
 		GameObject indicator_sh = (GameObject)Instantiate(indicatorprefab);
 		indicator_sh.GetComponent<IndicatorEvents>().linkedObj = linkObj;
-		indicator_sh.GetComponent<IndicatorEvents>().player=playerobj;
+		//indicator_sh.GetComponent<IndicatorEvents>().player=playerobj;
 		indicator_sh.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
 		indicatorsList_sh.Add(indicator_sh);
 
@@ -193,7 +194,7 @@ public class Indicators : MonoBehaviour {
 //					print (results [0]);
 					if (indicatorsList_sh.Contains (results [0].gameObject)) {
 						Debug.Log (results [0].gameObject.GetComponent<IndicatorEvents> ().linkedObj);//.GetComponent<ShipMotor>().thisShip.p.visibleName);
-                        Debug.Log("playerobj.GetComponent<ShipMotor> ().SetTarget(results [0].gameObject.GetComponent<IndicatorEvents> ().linkedObj.GetComponent<ShipMotor>().thisShip.p.SO);");
+                        playerobj.GetComponent<ShipMotor> ().SetTarget(results [0].gameObject.GetComponent<IndicatorEvents> ().linkedObj.GetComponent<ShipMotor>().thisShip.p);
 					}
 					if (indicatorsList_wp.Contains (results [0].gameObject)||indicatorsList_so.Contains (results [0].gameObject)) {
 						Debug.Log (results [0].gameObject.GetComponent<IndicatorEvents> ().linkedObj);//.GetComponent<ShipMotor>().thisShip.p.visibleName);

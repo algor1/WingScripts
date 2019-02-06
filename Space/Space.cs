@@ -36,7 +36,7 @@ public class Space : MonoBehaviour
     //  private GameObject serverSOObj;
     //    [SerializeField]
     //  private GameObject serverLandObj;
-    //  [SerializeField]
+      [SerializeField]
       private GameObject canvasobj;
 
 
@@ -45,11 +45,13 @@ public class Space : MonoBehaviour
     {
         nearestShips = new Dictionary<int, GameObject>();
         //nearestSOs = new Dictionary<int, GameObject>();
+        GameManager.onPlayerShipData += CreatePlayer;
+        GameManager.SendPlayerInit();
     }
     void Start()
     {
-        GameManager.onPlayerShipData += CreatePlayer;
-        GameManager.SendPlayerInit();
+        //GameManager.onPlayerShipData += CreatePlayer;
+        //GameManager.SendPlayerInit();
         GameManager.onNearestShipData += NearestShipsListUpdate;
         Debug.Log("spase started");
 
@@ -139,37 +141,43 @@ public class Space : MonoBehaviour
 
       void NearestShipsListUpdate(ShipData[] shipsFromServer)
       {
-          while (true) {
 
-              //Создаем копию dict nearestShips чтобы узнать какие нужно удалить
-              Dictionary<int,int> shipsForDeletionList = new Dictionary<int,int> ();
-              foreach (int key in nearestShips.Keys) { 
-                  shipsForDeletionList.Add (key, key);
-    //                Debug.Log (shipsForDeletionList);
-    //                print (key);
-              }   
+          //Создаем копию dict nearestShips чтобы узнать какие нужно удалить
+          Dictionary<int,int> shipsForDeletionList = new Dictionary<int,int> ();
+        foreach (int key in nearestShips.Keys)
+        {
+            shipsForDeletionList.Add(key, key);
+            //                Debug.Log (shipsForDeletionList);
+            //                print (key);
+        }
 
-    //        Debug.Log (shipsFromServer.Count);
-              for (int i = 0; i < shipsFromServer.Length; i++) {
-                  //print(shipsFromServer[i].p.id);
-                  if (shipsForDeletionList.Remove (shipsFromServer [i].Id)) {
-                      UpdateShip (shipsFromServer [i]);
-                      //print ("4");
-                  } else {
-                      print ("add ship");
-                      AddShip (shipsFromServer [i]);
-                      UpdateShip (shipsFromServer [i]);           
-                  }   
+        //        Debug.Log (shipsFromServer.Count);
+        for (int i = 0; i < shipsFromServer.Length; i++)
+        {
+            //print(shipsFromServer[i].p.id);
+            if (shipsForDeletionList.Remove(shipsFromServer[i].Id))
+            {
+                UpdateShip(shipsFromServer[i]);
+                //print ("4");
+            }
+            else
+            {
+                print("add ship");
+                AddShip(shipsFromServer[i]);
+                UpdateShip(shipsFromServer[i]);
+            }
 
-              }
-              //удаляем корабли которых небыло в списке
-              foreach (int key in shipsForDeletionList.Keys) { 
-                  DeleteShip (key);
+        }
+        //удаляем корабли которых небыло в списке
+        foreach (int key in shipsForDeletionList.Keys)
+        {
+            DeleteShip(key);
 
 
-              }
+        }
 
-          }
+
+          
       }
       //  ---------------------  SHIPS END  ---------------------------------
 }

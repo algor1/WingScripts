@@ -8,89 +8,92 @@ using SpaceObjects;
 
 //namespace Game
 //{
-    public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour
+{
+    //[SerializeField]
+    //private GameObject ShowEnv;
+    #region Events
+
+    public delegate void NearestShipsDataEventHandler(ShipData[] nearestShipData);
+    public delegate void PlayerShipDataEventHandler(ShipData shipData);
+
+
+
+    public static event NearestShipsDataEventHandler onNearestShipData;
+    public static event PlayerShipDataEventHandler onPlayerShipData;
+
+
+
+
+
+    #endregion
+
+    private void Start()
     {
-        [SerializeField]
-        private GameObject ShowEnv;
-        #region Events
+        Debug.Log("Game started");
+        GameControl.Client.MessageReceived += OnDataHandler;
+    }
 
-        public delegate void NearestShipsDataEventHandler(ShipData[] nearestShipData);
-        public delegate void PlayerShipDataEventHandler(ShipData shipData);
+    private void OnDestroy()
+    {
+        if (GameControl.Client == null)
+            return;
 
+        GameControl.Client.MessageReceived -= OnDataHandler;
+    }
 
+    #region Network Calls
 
-        public static event NearestShipsDataEventHandler onNearestShipData;
-        public static event PlayerShipDataEventHandler onPlayerShipData;
-
-
-
-
-
-        #endregion
-
-        private void Start()
+    public static void SendPlayerShipCommands(Command command, int target_id,int point_id)
+    {
+        using (var writer = DarkRiftWriter.Create())
         {
-            Debug.Log("Game started");
-            GameControl.Client.MessageReceived += OnDataHandler;
-        }
+            writer.Write((int)command);
+            writer.Write(target_id);
+            writer.Write(target_id);
 
-        private void OnDestroy()
-        {
-            if (GameControl.Client == null)
-                return;
-
-            GameControl.Client.MessageReceived -= OnDataHandler;
-        }
-
-        #region Network Calls
-
-        public static void SendPlayerShipCommands(string friendName)
-        {
-            using (var writer = DarkRiftWriter.Create())
-            {
-                writer.Write(friendName);
-
-                using (var msg = Message.Create(FriendTags.FriendRequest, writer))
-                {
-                    GameControl.Client.SendMessage(msg, SendMode.Reliable);
-                }
-            }
-        }
-        public static void SendPlayerInit ()
-        {
-            using (var msg = Message.CreateEmpty(GameTags.InitPlayer))
+            using (var msg = Message.Create(GameTags.PlayerCommand, writer))
             {
                 GameControl.Client.SendMessage(msg, SendMode.Reliable);
             }
         }
-        #endregion
-
-        private static void OnDataHandler(object sender, MessageReceivedEventArgs e)
+    }
+    public static void SendPlayerInit()
+    {
+        using (var msg = Message.CreateEmpty(GameTags.InitPlayer))
         {
+            GameControl.Client.SendMessage(msg, SendMode.Reliable);
+        }
+    }
+   
+    #endregion
 
-            using (var message = e.GetMessage())
+    private static void OnDataHandler(object sender, MessageReceivedEventArgs e)
+    {
+
+        using (var message = e.GetMessage())
+        {
+            Debug.Log(message.Tag + "  ");
+            // Check if message is meant for this plugin
+            if (message.Tag < Tags.TagsPerPlugin * Tags.Game || message.Tag >= Tags.TagsPerPlugin * (Tags.Game + 1))
+                return;
+
+            switch (message.Tag)
             {
-                Debug.Log(message.Tag + "  ");
-                // Check if message is meant for this plugin
-                if (message.Tag < Tags.TagsPerPlugin * Tags.Game || message.Tag >= Tags.TagsPerPlugin * (Tags.Game+ 1))
-                    return;
-
-                switch (message.Tag)
-                {
-                    case GameTags.NearestSpaceObjects:
+                case GameTags.NearestSpaceObjects:
+                    {
+                        using (var reader = message.GetReader())
                         {
-                            using (var reader = message.GetReader())
-                            {
-                                ShipData[] nearestShipDataArray = reader.ReadSerializables<ShipData>();
+                            ShipData[] nearestShipDataArray = reader.ReadSerializables<ShipData>();
 
-                                Debug.Log($"Nearest ships"+ nearestShipDataArray.Length);
-                                //ChatManager.ServerMessage(friendName + " wants to add you as a friend!", MessageType.Info);
+                            Debug.Log($"Nearest ships" + nearestShipDataArray.Length);
+                            //ChatManager.ServerMessage(friendName + " wants to add you as a friend!", MessageType.Info);
 
-                                onNearestShipData?.Invoke(nearestShipDataArray);
-                            }
-                            break;
+                            onNearestShipData?.Invoke(nearestShipDataArray);
                         }
-                   case GameTags.PlayerShipData:
+                        break;
+                    }
+                case GameTags.PlayerShipData:
                     {
                         using (var reader = message.GetReader())
                         {
@@ -98,13 +101,13 @@ using SpaceObjects;
 
                             Debug.Log($"Player ship data recieved" + playerShipData.VisibleName);
                             //ChatManager.ServerMessage(friendName + " wants to add you as a friend!", MessageType.Info);
-                            Debug.Log( onPlayerShipData.GetInvocationList().Length);
+                            Debug.Log(onPlayerShipData.GetInvocationList().Length);
                             onPlayerShipData?.Invoke(playerShipData);
                         }
                         break;
                     }
-                }
             }
         }
     }
+}
 //}
