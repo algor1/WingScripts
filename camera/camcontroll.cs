@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Threading;
-
+using System.Threading.Tasks;
 
 public class camcontroll : MonoBehaviour {
 	
@@ -17,22 +17,28 @@ public class camcontroll : MonoBehaviour {
 		offset = Vector3.forward * -50;
 
         player = GameObject.Find("SpaceManager").GetComponent<Space>().Player;
+        
 		transform.LookAt(player.transform.position);
 	}
-	void Update()
-	{
-        if (player == null)
+    private async Task PlayerAssign()
+    {
+        while (player == null)
         {
             try
             {
                 player = GameObject.Find("SpaceManager").GetComponent<Space>().Player;
             }
-
-            catch
+            catch 
             {
-                return;
+                continue;
             }
+            await Task.Delay(1000);
+
         }
+    }
+    void Update()
+	{
+
 
         transform.position = player.transform.position + offset;
 
