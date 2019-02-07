@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
         {
             writer.Write((int)command);
             writer.Write(target_id);
-            writer.Write(target_id);
+            writer.Write(point_id);
 
             using (var msg = Message.Create(GameTags.PlayerCommand, writer))
             {

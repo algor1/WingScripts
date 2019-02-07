@@ -106,34 +106,28 @@ public class ShipMotor : MonoBehaviour {
     public void GoTotarget()
        {
     	thisShip.GoToTarget ();
-    	//Server_GO.GetComponent<Server> ().PlayerControl(0,Server.Command.MoveTo,0);
 
        }
     //   public void WarpTotarget()
-
     //   {
     //	thisShip.WarpToTarget ();
-    //	Server_GO.GetComponent<Server> ().PlayerControl(0,Server.Command.WarpTo,0);
     //   }
 
     //   public void StartEquipment(int weaponnum)
     //   {
     //       thisShip.StartEquipment();
-    //	Server_GO.GetComponent<Server>().PlayerControl(0, Server.Command.Equipment,weaponnum);
     //   }
     //public void AtackTarget(int weaponnum)
     //{
     //	thisShip.Atack_target(weaponnum);
-    //	Server_GO.GetComponent<Server>().PlayerControl(0, Server.Command.Atack,weaponnum);
     //}
 
     //   public void LandTotarget()
     //   {
-    //	Server_GO.GetComponent<Server> ().PlayerControl (0, Server.Command.LandTo,0);
+
     //   }
     //public void OpenTarget()
     //{
-    //	Server_GO.GetComponent<Server> ().PlayerControl (0, Server.Command.Open,0);
     //	thisShip.OpenTarget ();
     //}
     #endregion
