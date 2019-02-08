@@ -2,22 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class cameraslink : MonoBehaviour {
+public class SolarSystemCameraControl : MonoBehaviour {
 	[SerializeField]
-	private GameObject dataLocal;
+	private GameObject spaceManager;
+    [SerializeField]
+	private Camera mainCamera;
 	[SerializeField]
 	private ParticleSystem warpPartical;
     private bool warpFlag;
     private Vector3 warpTarget;
     private float warpSpeed;
 
-	public Camera mainCamera;
 	private ParticleSystem.EmissionModule warpParticlesEmission;
 
 	// Use this for initialization
 	void Start () {
 		warpParticlesEmission = warpPartical.GetComponent<ParticleSystem>().emission;
-        Vector3 zp = dataLocal.GetComponent<Space>().GetZeroPoint();
+        Vector3 zp = spaceManager.GetComponent<Space>().GetZeroPoint();
         transform.localPosition =zp / 1000;
         warpFlag = false;
 		warpParticlesEmission.enabled=false;
@@ -40,7 +41,7 @@ public class cameraslink : MonoBehaviour {
     void NormalFly()
     {
 //		print (transform.localPosition);
-        Vector3 zp = dataLocal.GetComponent<Space>().GetZeroPoint();
+        Vector3 zp = spaceManager.GetComponent<Space>().GetZeroPoint();
         transform.localPosition = (mainCamera.transform.position + zp) / 1000;
         transform.rotation = mainCamera.transform.rotation;
 
