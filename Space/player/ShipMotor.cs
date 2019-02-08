@@ -6,49 +6,39 @@ using SpaceObjects;
 
 [RequireComponent(typeof(Rigidbody))]
 
-public class ShipMotor : MonoBehaviour {
+public class ShipMotor : MonoBehaviour
+{
 
-	[SerializeField]
-	private GameObject spaceManager;
-	public Ship thisShip;
-
-
-
-
-	private bool _flagWarp;
-	public float _warpPower;
-	public float back_thrust;
-
-
-	public float thrust;
-
-	[SerializeField]
-	private GameObject burner;	
-
-
-
-	[SerializeField]
-	private List<GameObject> weaponPoints;
+    [SerializeField]
+    private GameObject spaceManager;
+    public Ship thisShip;
 
 
 
 
-	//public enum ShipEvenentsType{spawn,warp,warmwarp,move,stop,land,hide,reveal};
+    // private bool _flagWarp;
+    // public float _warpPower;
+    // public float back_thrust;
+    // // public float thrust;
+
+    [SerializeField]
+    private GameObject burner;
+
+    [SerializeField]
+    private List<GameObject> weaponPoints;
 
 
+    public void Init(ShipData _shipData, GameObject _spaceManager)
+    {
 
-
-	public void Init(ShipData _shipData, GameObject _spaceManager)
-	{
-
-		thisShip = new Ship(_shipData);
+        thisShip = new Ship(_shipData);
         SignOnShipEvents();
-		Debug.Log (this);
+        Debug.Log(this);
         InitWeapons();
-		
-		spaceManager = _spaceManager;
-		Debug.Log ("----init   " + thisShip.p.VisibleName+"  id   " +thisShip.p.Id);
-	}
+
+        spaceManager = _spaceManager;
+        Debug.Log("----init   " + thisShip.p.VisibleName + "  id   " + thisShip.p.Id);
+    }
 
     private void InitWeapons()
     {
@@ -62,7 +52,9 @@ public class ShipMotor : MonoBehaviour {
         //    }
         //}
     }
-    private void SignOnShipEvents() { 
+    private void SignOnShipEvents()
+    {
+        thisShip.OnChangeState +=ShipAnimationEvents;
     }
 
 
@@ -70,44 +62,47 @@ public class ShipMotor : MonoBehaviour {
 
 
 
-	void FixedUpdate () {
-		thisShip.Tick ();
-		//Warp();
-		//Atack();
+    void FixedUpdate()
+    {
+        thisShip.Tick();
+        //Warp();
+        //Atack();
         //Equipment();
-		PerformRotateQ ();
+        PerformRotateQ();
 
-		PerformMove ();
+        PerformMove();
 
-	}
-
-
-
-	void PerformRotateQ(){
-		transform.rotation = thisShip.p.Rotation;
+    }
 
 
-	}
 
-	void PerformMove(){
-		transform.position = thisShip.p.Position-spaceManager.GetComponent<Space>().GetZeroPoint();
-	}
+    void PerformRotateQ()
+    {
+        transform.rotation = thisShip.p.Rotation;
+
+
+    }
+
+    void PerformMove()
+    {
+        transform.position = thisShip.p.Position - spaceManager.GetComponent<Space>().GetZeroPoint();
+    }
 
 
 
     #region UserCommands
 
-       public void SetTarget(SpaceObject tg)
+    public void SetTarget(SpaceObject tg)
     {
-    	thisShip.SetTarget(tg);
+        thisShip.SetTarget(tg);
     }
 
 
     public void GoTotarget()
-       {
-    	thisShip.GoToTarget ();
+    {
+        thisShip.GoToTarget();
 
-       }
+    }
     //   public void WarpTotarget()
     //   {
     //	thisShip.WarpToTarget ();
@@ -144,10 +139,7 @@ public class ShipMotor : MonoBehaviour {
     //		Debug.Log ("move ship To 0,0,0");
     //		transform.position = transform.position * 0;
     //	}
-    //public void Thrust(float _thrust)
-    //{
-    //    thisShip.p.SpeedNew = thisShip.p.SpeedMax * _thrust;
-    //}
+
     //	private void Warp()
     //	{
     //		if ( thisShip.moveCommand == Ship.MoveType.warp)
@@ -216,63 +208,64 @@ public class ShipMotor : MonoBehaviour {
     //}
     #endregion
 
-    //    public void Events(Ship.ShipEvenentsType shipEvent, Ship ship)
-    //	{
-    //		if (ship == thisShip) {
-    //			switch (shipEvent) {
-    //			case Ship.ShipEvenentsType.stop:
-    //				Debug.Log ("motor " + thisShip.p.visibleName + " ship stopped");
-    //				burner.GetComponent<BurnControl> ().EngineStop ();
-    //				break;
-    //			case Ship.ShipEvenentsType.move:
-    //				Debug.Log ("motor " + thisShip.p.visibleName + " ship accelerated");
-    //				burner.GetComponent<BurnControl> ().EngineStart ();
-    //				break;
-    //			case Ship.ShipEvenentsType.warmwarp:
-    //				Debug.Log ("motor " + thisShip.p.visibleName + " ship preparing to warp");
-    //				burner.GetComponent<BurnControl> ().WarpStart ();
-    //				break;
-    //			case Ship.ShipEvenentsType.warp:
+    private void ShipAnimationEvents(Ship.ShipEvenentsType shipEvent)
+    {
+        if (ship == thisShip)
+        {
+            switch (shipEvent)
+            {
+                case Ship.ShipEvenentsType.stop:
+                    Debug.Log("motor " + thisShip.p.visibleName + " ship stopped");
+                    burner.GetComponent<BurnControl>().EngineStop();
+                    break;
+                case Ship.ShipEvenentsType.move:
+                    Debug.Log("motor " + thisShip.p.visibleName + " ship accelerated");
+                    burner.GetComponent<BurnControl>().EngineStart();
+                    break;
+                case Ship.ShipEvenentsType.warmwarp:
+                    Debug.Log("motor " + thisShip.p.visibleName + " ship preparing to warp");
+                    burner.GetComponent<BurnControl>().WarpStart();
+                    break;
+                case Ship.ShipEvenentsType.warp:
 
-    //				Debug.Log ("motor " + thisShip.p.visibleName + " ship warping....");
-    ////			if player
-    //				spaceManager.GetComponent<Effects> ().PlayerWarp (thisShip.targetToMove.position, thisShip.p.warpSpeed);
-    //				break;
-    //			case Ship.ShipEvenentsType.spawn:
-    //				Debug.Log ("motor " + thisShip.p.visibleName + " ship spawn");
-    //				spaceManager.GetComponent<Effects> ().PlayerWarpStop ();
-    //				burner.GetComponent<BurnControl> ().WarpStop ();
-    //				Spawn ();
-    //				break;
-    //			case Ship.ShipEvenentsType.land:
-    //				Debug.Log ("motor " + thisShip.p.visibleName + " ship landing");
-    //				Server_GO.GetComponent<LandingServer> ().Landing (thisShip.p.id, thisShip.targetToMove.id);
-    //				thisShip.landed = true;
-    //				break;
-    //			case Ship.ShipEvenentsType.destroyed:
-    //				Debug.Log ("motor " + thisShip.p.visibleName + " ship destroyed");
-    //				StopAtacking ();
-    //				StopEquipments ();
-    ////			thisShip = null;
-    //		//var detonator = gameObject.AddComponent<Detonator> ();
-    //		//detonator.duration = 4;
-    //		//detonator.destroyTime = 4;
-    //		//detonator.size = 40;
-    //		//detonator.autoCreateSmoke = false;
-    //		//detonator.autoCreateHeatwave = false;
-    //		//detonator.color = Color.white;
-    //		//detonator.destroyObj = false;
-    //		//detonator.Explode ();
-    //		thisShip.p.destroyed = true;
-    //		Debug.Log ("********************       explosion");
-    //		spaceManager.GetComponent<ShowEnv> ().DestroyShip (thisShip.p.id);
-    //		break;
-    //	case Ship.ShipEvenentsType.open:
-    //		GameObject canvasObj = GameObject.Find ("Canvas");
-    //		canvasObj.GetComponent<ShowMenus> ().ShowInventory (thisShip.p.id, thisShip.targetToMove.id);
-    //		break;
-    //	}
-    //}
-    //}
-
-}	
+                    Debug.Log("motor " + thisShip.p.visibleName + " ship warping....");
+                    //			if player
+                    spaceManager.GetComponent<Effects>().PlayerWarp(thisShip.targetToMove.position, thisShip.p.warpSpeed);
+                    break;
+                case Ship.ShipEvenentsType.spawn:
+                    Debug.Log("motor " + thisShip.p.visibleName + " ship spawn");
+                    spaceManager.GetComponent<Effects>().PlayerWarpStop();
+                    burner.GetComponent<BurnControl>().WarpStop();
+                    Spawn();
+                    break;
+                case Ship.ShipEvenentsType.land:
+                    Debug.Log("motor " + thisShip.p.visibleName + " ship landing");
+                    // Server_GO.GetComponent<LandingServer> ().Landing (thisShip.p.id, thisShip.targetToMove.id);
+                    thisShip.landed = true;
+                    break;
+                case Ship.ShipEvenentsType.destroyed:
+                    Debug.Log("motor " + thisShip.p.visibleName + " ship destroyed");
+                    StopAtacking();
+                    StopEquipments();
+                    //			thisShip = null;
+                    //var detonator = gameObject.AddComponent<Detonator> ();
+                    //detonator.duration = 4;
+                    //detonator.destroyTime = 4;
+                    //detonator.size = 40;
+                    //detonator.autoCreateSmoke = false;
+                    //detonator.autoCreateHeatwave = false;
+                    //detonator.color = Color.white;
+                    //detonator.destroyObj = false;
+                    //detonator.Explode ();
+                    thisShip.p.destroyed = true;
+                    Debug.Log("********************       explosion");
+                    spaceManager.GetComponent<ShowEnv>().DestroyShip(thisShip.p.id);
+                    break;
+                case Ship.ShipEvenentsType.open:
+                    GameObject canvasObj = GameObject.Find("Canvas");
+                    canvasObj.GetComponent<ShowMenus>().ShowInventory(thisShip.p.id, thisShip.targetToMove.id);
+                    break;
+            }
+        }
+    }
+}

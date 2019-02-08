@@ -102,6 +102,28 @@ public class Space : MonoBehaviour
         return zeroPoint;
     }
 
+    public void ClearAll()
+    {
+        // Debug.Log("coroutin stopped");
+
+        // StopCoroutine(coroutineSH);
+        // StopCoroutine(coroutineSO);
+        foreach (int key in nearestShips.Keys)
+        {
+            DeleteShip(key);
+        }
+        foreach (int key in nearestSOs.Keys)
+        {
+            DeleteSO(key);
+        }
+    }
+    public void UpdateAll()
+    {
+            //send request to server for nearest ship
+    }
+
+
+
     //    ---------------------  SHIPS ---------------------------------
     void AddShip(ShipData shipData)
     {
