@@ -29,7 +29,7 @@ public class Space : MonoBehaviour
     //    //public Dictionary<int,FlyObject> nearestFlyObject;
     //  public Dictionary<int,GameObject> nearestShips;
     //  public List<SpaceObject> serverSOlist;
-    //  public Dictionary<int,GameObject> nearestSOs;
+      public Dictionary<int,GameObject> nearestSOs;
     //  Coroutine shipcoroutine;
     //  Coroutine socoroutine;
     //  private IEnumerator coroutineSH;
@@ -47,15 +47,20 @@ public class Space : MonoBehaviour
     void Awake()
     {
         nearestShips = new Dictionary<int, GameObject>();
-        //nearestSOs = new Dictionary<int, GameObject>();
+        nearestSOs = new Dictionary<int, GameObject>();
         GameManager.onPlayerShipData += InitSpace; //?? 
         GameManager.SendPlayerInit();
     }
     void InitSpace(ShipData playerShipData)
     {
+        Debug.Log("Init solar system...");
         CreateSolarSystem();
+        Debug.Log("Init player ...");
         CreatePlayer(playerShipData);
+        Debug.Log("Init canvas system...");
         LoadCanvasSystem();
+        Debug.Log("Init user command system...");
+        GetComponent<CommandManager>().Init(Player);
         mainCamera.GetComponent<MainCamControl>().Init(Player);
 
         GameManager.onNearestShipData += NearestShipsListUpdate;
@@ -78,6 +83,7 @@ public class Space : MonoBehaviour
         Debug.Log("creating player...");
         if (Player == null)
         {
+            SetZeroPoint(shipData.Position);
             Debug.Log("player prefub " + shipData.Prefab);
             Player = (GameObject)Instantiate(Resources.Load(shipData.Prefab, typeof(GameObject)), shipData.Position - zeroPoint, shipData.Rotation);
             ShipMotor shipMotor = Player.AddComponent<ShipMotor>() as ShipMotor;
@@ -112,10 +118,10 @@ public class Space : MonoBehaviour
         {
             DeleteShip(key);
         }
-        foreach (int key in nearestSOs.Keys)
-        {
-            DeleteSO(key);
-        }
+        //foreach (int key in nearestSOs.Keys)
+        //{
+            //DeleteSO(key);
+        //}
     }
     public void UpdateAll()
     {

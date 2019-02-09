@@ -7,13 +7,18 @@ public class SpaceParticles : MonoBehaviour {
 	private GameObject player;
 	float speed;
 	ParticleSystem ps;
+    bool initialized;
 
 
-	void Start () {
+	
+    
+    public void Init () {
 		speed = player.GetComponent<ShipMotor> ().thisShip.p.Speed;
 		ps=GetComponent<ParticleSystem> ();
 		var em = ps.emission;
 		em.enabled = false;
+        initialized = true;
+
 		
 	}
 

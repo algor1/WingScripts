@@ -12,7 +12,7 @@ public class MainCamControl : MonoBehaviour {
 	private GameObject player;
 	private bool initialaized;
 
-	void Init (GameObject _player){
+	public void Init (GameObject _player){
 		offset = Vector3.forward * -50;
 
         player = _player;

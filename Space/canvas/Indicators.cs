@@ -56,8 +56,7 @@ public class Indicators : MonoBehaviour
 
         {
             GameObject indicator_wp = (GameObject)Instantiate(indicatorprefab);
-            indicator_wp.GetComponent<IndicatorEvents>().linkedObj = wpList[i];
-            indicator_wp.GetComponent<IndicatorEvents>().player = playerobj;
+            indicator_wp.GetComponent<IndicatorLink>().linkedObj = wpList[i];
             indicator_wp.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
             indicatorsList_wp.Add(indicator_wp);
         }
@@ -67,7 +66,7 @@ public class Indicators : MonoBehaviour
         for (int i = 0; i < indicatorsList_wp.Count; i++)
         {
 
-            Vector3 screenPos = mainCam.WorldToScreenPoint(indicatorsList_wp[i].GetComponent<IndicatorEvents>().linkedObj.transform.position);
+            Vector3 screenPos = mainCam.WorldToScreenPoint(indicatorsList_wp[i].GetComponent<IndicatorLink>().linkedObj.transform.position);
             if (screenPos.z > 0)
             {
                 indicatorsList_wp[i].GetComponent<RectTransform>().position = screenPos.x * Vector3.right + screenPos.y * Vector3.up;
@@ -85,8 +84,8 @@ public class Indicators : MonoBehaviour
     public void AddIndicator_sh(GameObject linkObj)
     {
         GameObject indicator_sh = (GameObject)Instantiate(indicatorprefab);
-        indicator_sh.GetComponent<IndicatorEvents>().linkedObj = linkObj;
-        //indicator_sh.GetComponent<IndicatorEvents>().player=playerobj;
+        indicator_sh.GetComponent<IndicatorLink>().linkedObj = linkObj;
+        //indicator_sh.GetComponent<IndicatorLink>().player=playerobj;
         indicator_sh.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
         indicatorsList_sh.Add(indicator_sh);
 
@@ -98,9 +97,9 @@ public class Indicators : MonoBehaviour
     {
         for (int i = 0; i < indicatorsList_sh.Count; i++)
         {
-            if (indicatorsList_sh[i].GetComponent<IndicatorEvents>().linkedObj.GetComponent<ShipMotor>().thisShip.p.Id == ship_id)
+            if (indicatorsList_sh[i].GetComponent<IndicatorLink>().linkedObj.GetComponent<ShipMotor>().thisShip.p.Id == ship_id)
             {
-                Debug.Log("Delete Ship  " + indicatorsList_sh[i].GetComponent<IndicatorEvents>().linkedObj.GetComponent<ShipMotor>().thisShip.p.VisibleName);
+                Debug.Log("Delete Ship  " + indicatorsList_sh[i].GetComponent<IndicatorLink>().linkedObj.GetComponent<ShipMotor>().thisShip.p.VisibleName);
                 GameObject indicator_sh = indicatorsList_sh[i];
                 indicatorsList_sh.RemoveAt(i);
                 Destroy(indicator_sh);
@@ -118,7 +117,7 @@ public class Indicators : MonoBehaviour
         for (int i = 0; i < indicatorsList_sh.Count; i++)
         {
 
-            Vector3 screenPos = mainCam.WorldToScreenPoint(indicatorsList_sh[i].GetComponent<IndicatorEvents>().linkedObj.transform.position);
+            Vector3 screenPos = mainCam.WorldToScreenPoint(indicatorsList_sh[i].GetComponent<IndicatorLink>().linkedObj.transform.position);
             if (screenPos.z > 0)
             {
                 indicatorsList_sh[i].GetComponent<RectTransform>().position = screenPos.x * Vector3.right + screenPos.y * Vector3.up;
@@ -139,8 +138,7 @@ public class Indicators : MonoBehaviour
     public void AddIndicator_so(GameObject linkObj)
     {
         GameObject indicator_so = (GameObject)Instantiate(indicatorprefab);
-        indicator_so.GetComponent<IndicatorEvents>().linkedObj = linkObj;
-        indicator_so.GetComponent<IndicatorEvents>().player = playerobj;
+        indicator_so.GetComponent<IndicatorLink>().linkedObj = linkObj;
         indicator_so.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
         indicatorsList_so.Add(indicator_so);
 
@@ -152,9 +150,9 @@ public class Indicators : MonoBehaviour
     {
         for (int i = 0; i < indicatorsList_so.Count; i++)
         {
-            if (indicatorsList_so[i].GetComponent<IndicatorEvents>().linkedObj.GetComponent<SOParametres>().thisServerObject.Id == so_id)
+            if (indicatorsList_so[i].GetComponent<IndicatorLink>().linkedObj.GetComponent<SOParametres>().thisServerObject.Id == so_id)
             {
-                Debug.Log("Delete SO  " + indicatorsList_so[i].GetComponent<IndicatorEvents>().linkedObj.GetComponent<SOParametres>().thisServerObject.VisibleName);
+                Debug.Log("Delete SO  " + indicatorsList_so[i].GetComponent<IndicatorLink>().linkedObj.GetComponent<SOParametres>().thisServerObject.VisibleName);
                 GameObject indicator_sh = indicatorsList_so[i];
                 indicatorsList_so.RemoveAt(i);
                 Destroy(indicator_sh);
@@ -173,7 +171,7 @@ public class Indicators : MonoBehaviour
         {
 
 
-            Vector3 screenPos = mainCam.WorldToScreenPoint(indicatorsList_so[i].GetComponent<IndicatorEvents>().linkedObj.transform.position);
+            Vector3 screenPos = mainCam.WorldToScreenPoint(indicatorsList_so[i].GetComponent<IndicatorLink>().linkedObj.transform.position);
             if (screenPos.z > 0)
             {
                 indicatorsList_so[i].GetComponent<RectTransform>().position = screenPos.x * Vector3.right + screenPos.y * Vector3.up;
@@ -211,12 +209,12 @@ public class Indicators : MonoBehaviour
                     if (indicatorsList_sh.Contains(results[0].gameObject))
                     {
                         Debug.Log(results[0].gameObject.GetComponent<IndicatorLink>().linkedObj);//.GetComponent<ShipMotor>().thisShip.p.visibleName);
-                        spaceManager.GetComponent<CommandManager>().SendUserCommand(SpaceObjects.Command.SetTarget, results[0].gameObject.GetComponent<IndicatorEvents>().linkedObj);
+                        spaceManager.GetComponent<CommandManager>().SendUserCommand(SpaceObjects.Command.SetTarget, results[0].gameObject.GetComponent<IndicatorLink>().linkedObj);
                     }
                     //if (indicatorsList_wp.Contains (results [0].gameObject)||indicatorsList_so.Contains (results [0].gameObject)) {
-                    //Debug.Log (results [0].gameObject.GetComponent<IndicatorEvents> ().linkedObj);//.GetComponent<ShipMotor>().thisShip.p.visibleName);
+                    //Debug.Log (results [0].gameObject.GetComponent<IndicatorLink> ().linkedObj);//.GetComponent<ShipMotor>().thisShip.p.visibleName);
 
-                    //Debug.Log(" playerobj.GetComponent<ShipMotor> ().SetTarget(results [0].gameObject.GetComponent<IndicatorEvents> ().linkedObj.GetComponent<SOParametres>().thisServerObject);");
+                    //Debug.Log(" playerobj.GetComponent<ShipMotor> ().SetTarget(results [0].gameObject.GetComponent<IndicatorLink> ().linkedObj.GetComponent<SOParametres>().thisServerObject);");
                     //}
                 }
             }

@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
                         {
                             ShipData playerShipData = reader.ReadSerializable<ShipData>();
 
-                            Debug.Log($"Player ship data recieved" + playerShipData.VisibleName);
+                            Debug.Log($"Player ship data recieved  " + playerShipData.VisibleName);
                             //ChatManager.ServerMessage(friendName + " wants to add you as a friend!", MessageType.Info);
                             Debug.Log(onPlayerShipData.GetInvocationList().Length);
                             onPlayerShipData?.Invoke(playerShipData);

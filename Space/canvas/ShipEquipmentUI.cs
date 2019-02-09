@@ -18,7 +18,7 @@ public class ShipEquipmentUI : MonoBehaviour
 
 
 
-    void Init(GameObject _player)
+    public void Init(GameObject _player)
     {
 		player=_player;
         weapons = player.GetComponent<ShipMotor>().thisShip.Weapons;

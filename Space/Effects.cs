@@ -9,12 +9,12 @@ public class Effects : MonoBehaviour {
 
     public void PlayerWarp(Vector3 _target,float _speed) {
 		GetComponent<Space> ().ClearAll ();
-        secondCamera.GetComponent<cameraslink>().WarpTo(_target,_speed);
+        secondCamera.GetComponent<SolarSystemCameraControl>().WarpTo(_target,_speed);
 
 
     }
 	public void PlayerWarpStop() {
-		secondCamera.GetComponent<cameraslink>().WarpStop();
+		secondCamera.GetComponent<SolarSystemCameraControl>().WarpStop();
 		GetComponent<Space> ().UpdateAll ();
 	}
 }

@@ -6,9 +6,11 @@ using SpaceObjects;
 public class CommandManager : MonoBehaviour
 {
     private GameObject player;
-    private void Start()
+    bool initialized;
+
+    public void Init(GameObject _player)
     {
-        player = GetComponent<Space>().Player;
+        player = _player;
 
     }
     public void SendUserCommand(Command command,GameObject target=null,int point_id=-1)
