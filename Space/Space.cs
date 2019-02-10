@@ -63,7 +63,8 @@ public class Space : MonoBehaviour
         GetComponent<CommandManager>().Init(Player);
         mainCamera.GetComponent<MainCamControl>().Init(Player);
 
-        GameManager.onNearestShipData += NearestShipsListUpdate;
+        GameManager.onNearestShipData += ShipsListUpdate;
+        GameManager.onNearestSpaceObject += SOListUpdate;
 
     }
 
@@ -190,7 +191,7 @@ public class Space : MonoBehaviour
 
 
 
-    void NearestShipsListUpdate(ShipData[] shipsFromServer)
+    void ShipsListUpdate(ShipData[] shipsFromServer)
     {
 
         //Создаем копию dict nearestShips чтобы узнать какие нужно удалить
@@ -230,5 +231,90 @@ public class Space : MonoBehaviour
 
 
     }
-    //  ---------------------  SHIPS END  ---------------------------------
+    //  ---------------------  SHIPS END ---------------------------------
+
+    //  ---------------------  SO (Space Objects) ---------------------------------
+
+    void AddSO(SpaceObject so)
+    {
+        Debug.Log("prefub " + so.Prefab);
+
+        GameObject SObj = (GameObject)Instantiate(Resources.Load(so.Prefab, typeof(GameObject)), so.Position - zeroPoint, so.Rotation);
+        SObj.AddComponent<SOParametres>();
+        SObj.GetComponent<SOParametres>().Init(so, this.gameObject);
+        //      Debug.Log (so.visibleName);
+        nearestSOs.Add(so.Id, SObj);
+        Debug.Log("add SO id " + so.Id);
+        canvasobj.GetComponent<Indicators>().AddIndicator_so(SObj);
+
+    }
+
+    void DeleteSO(int so_id)
+    {
+        canvasobj.GetComponent<Indicators>().DeleteIndicator_so(so_id);
+        if (nearestSOs.ContainsKey(so_id))
+        {
+            Destroy(nearestSOs[so_id]);
+            nearestSOs.Remove(so_id);
+        }
+    }
+
+    void UpdateSO(SpaceObject so)
+    {
+
+        nearestSOs[so.Id].transform.position = so.Position - zeroPoint;
+        nearestSOs[so.Id].transform.rotation = so.Rotation;
+
+    }
+
+
+
+
+
+
+    void SOListUpdate(SpaceObject[] soFromServer)
+    {
+        while (true)
+        {
+            //          Debug.Log(" забираем инфу SO с сервера ???");   
+            //      print ("1");
+            //Создаем копию dict nearestShips чтобы узнать какие нужно удалить
+            Dictionary<int, int> SOsForDeletionList = new Dictionary<int, int>();
+            foreach (int key in nearestSOs.Keys)
+            {
+                SOsForDeletionList.Add(key, key);
+                //              Debug.Log (shipsForDeletionList);
+                //              print (key);
+            }
+
+            //      Debug.Log (serverShipslist.Count);
+            for (int i = 0; i < soFromServer.Length; i++)
+            {
+                //print(serverShipslist[i].p.id);
+                if (SOsForDeletionList.Remove(soFromServer[i].Id))
+                {
+                    UpdateSO(soFromServer[i]);
+                    //print ("4");
+                }
+                else
+                {
+                    Debug.Log("add SO " + soFromServer[i].VisibleName);
+                    AddSO(soFromServer[i]);
+                    UpdateSO(soFromServer[i]);
+                }
+
+            }
+            //удаляем корабли которых небыло в списке
+            foreach (int key in SOsForDeletionList.Keys)
+            {
+                DeleteSO(key);
+
+
+            }
+            //          Debug.Log ("!!!!!!!!!!!!!!!! ended !!!!!!!!!!!!!!!!");
+        }
+    }
+
+    //  ---------------------  SO END ---------------------------------
+
 }

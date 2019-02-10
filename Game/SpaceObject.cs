@@ -3,7 +3,7 @@ using DarkRift;
 
 namespace SpaceObjects
 {
-    public class SpaceObject // :IDarkRiftSerializable
+    public class SpaceObject :IDarkRiftSerializable
     {
         public int Id { get; set; }
         public string VisibleName { get; set; }

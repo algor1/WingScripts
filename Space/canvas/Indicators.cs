@@ -33,7 +33,7 @@ public class Indicators : MonoBehaviour
     {
         playerobj = spaceManager.GetComponent<Space>().Player;
         CreateIndicators_sh();
-        //CreateIndicators_so ();
+        CreateIndicators_so ();
         //CreateIndicators_wp ();
         //wpList= spaceManager.GetComponent<Space>().wpList;
 		initialaized=true;
@@ -45,7 +45,7 @@ public class Indicators : MonoBehaviour
         {
             //UpdateIndicators_wp ();
             UpdateIndicators_sh();
-            //UpdateIndicators_so ();
+            UpdateIndicators_so ();
             TouchEvents();
         }
     }
