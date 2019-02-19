@@ -19,9 +19,9 @@ namespace Launcher
             _client = GetComponent<UnityClient>();
         }
 
-        private void Start()
-        {
-            SceneManager.LoadScene("Login");
-        }
+        //public void StartLogin()
+        //{
+        //    SceneManager.LoadScene("Login");
+        //}
     }
 }
