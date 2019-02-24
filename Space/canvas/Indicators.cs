@@ -209,13 +209,14 @@ public class Indicators : MonoBehaviour
                     if (indicatorsList_sh.Contains(results[0].gameObject))
                     {
                         Debug.Log(results[0].gameObject.GetComponent<IndicatorLink>().linkedObj);//.GetComponent<ShipMotor>().thisShip.p.visibleName);
-                        spaceManager.GetComponent<CommandManager>().SendUserCommand(SpaceObjects.Command.SetTarget, results[0].gameObject.GetComponent<IndicatorLink>().linkedObj);
+                        spaceManager.GetComponent<CommandManager>().SendUserCommand(SpaceObjects.Command.SetTargetShip, results[0].gameObject.GetComponent<IndicatorLink>().linkedObj);
                     }
-                    //if (indicatorsList_wp.Contains (results [0].gameObject)||indicatorsList_so.Contains (results [0].gameObject)) {
-                    //Debug.Log (results [0].gameObject.GetComponent<IndicatorLink> ().linkedObj);//.GetComponent<ShipMotor>().thisShip.p.visibleName);
+                    if  (indicatorsList_so.Contains (results [0].gameObject)) {
+                    Debug.Log (results [0].gameObject.GetComponent<IndicatorLink> ().linkedObj);//.GetComponent<ShipMotor>().thisShip.p.visibleName);
+                        spaceManager.GetComponent<CommandManager>().SendUserCommand(SpaceObjects.Command.SetTarget, results[0].gameObject.GetComponent<IndicatorLink>().linkedObj);
 
-                    //Debug.Log(" playerobj.GetComponent<ShipMotor> ().SetTarget(results [0].gameObject.GetComponent<IndicatorLink> ().linkedObj.GetComponent<SOParametres>().thisServerObject);");
-                    //}
+                        Debug.Log(" playerobj.GetComponent<ShipMotor> ().SetTarget(results [0].gameObject.GetComponent<IndicatorLink> ().linkedObj.GetComponent<SOParametres>().thisServerObject);");
+                    }
                 }
             }
         }

@@ -8,9 +8,9 @@ public class SOParametres : MonoBehaviour {
 	[SerializeField]
 	private GameObject spaceManager;
 
-	public void Init (SpaceObject thisSO_, GameObject sM)
+	public void Init (SpaceObject thisSO, GameObject sM)
 		{
-		thisServerObject= new SpaceObject(thisSO_);
+		thisServerObject= new SpaceObject(thisSO);
 		spaceManager = sM;
 
 	}

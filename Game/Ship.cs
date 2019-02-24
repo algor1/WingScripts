@@ -9,7 +9,7 @@ namespace SpaceObjects
 {
     public enum ComandType { warpTo, goTo, landTo, none, open };
     public enum ShipEvenentsType { spawn, warp, warmwarp, move, stop, land, hide, reveal, destroyed, open };
-    public enum Command { MoveTo, WarpTo, Atack, SetTarget, LandTo, Equipment, Open, TakeOff };
+    public enum Command { MoveTo, WarpTo, Atack, SetTarget, SetTargetShip, LandTo, Equipment, Open, TakeOff };
     public enum TypeSO { asteroid, ship, station, waypoint, container };
 
 
@@ -156,6 +156,9 @@ namespace SpaceObjects
                 case Command.SetTarget:
                     SetTarget(target);
                     break;
+                case Command.SetTargetShip:
+                    SetTarget(target);
+                    break;
             }
         }
 
@@ -164,7 +167,7 @@ namespace SpaceObjects
         {
             NewTargetToMove = newTarget;
             NewTargetToAtack = newTarget.Type== TypeSO.ship ? newTarget : null;
-            Console.WriteLine("{0} id {1} target to move {2} , target to atack {3}",  newTarget.Type, p.Id, NewTargetToMove.Id, NewTargetToAtack.Id);
+            Console.WriteLine("{0} id {1} target to move {2} , target to atack {3}",  newTarget.Type, p.Id, NewTargetToMove?.Id, NewTargetToAtack?.Id);
         }
         public void GoToTarget()
         {
@@ -173,7 +176,7 @@ namespace SpaceObjects
                 zBeforeRotation = p.Rotation.eulerAngles.z;
                 complexCommand = ComandType.goTo;
                 TargetToMove = NewTargetToMove;
-                Console.WriteLine("{0} id {1} moving to {2} id{3}", p.Type, p.Id, NewTargetToMove.Type, NewTargetToMove.Id);
+                Console.WriteLine("{0} id {1} moving to {2} id{3}", p.Type, p.Id, NewTargetToMove?.Type, NewTargetToMove?.Id);
 
                 //			oldRotation = p.SO.rotation;
 

@@ -15,9 +15,23 @@ public class CommandManager : MonoBehaviour
     }
     public void SendUserCommand(Command command,GameObject target=null,int point_id=-1)
     {
-        int target_id = (target != null) ? target.GetComponent<ShipMotor>().thisShip.p.Id : -1;
-        var targetShipdata= (target != null) ? target.GetComponent<ShipMotor>().thisShip.p : null;
-        player.GetComponent<ShipMotor>().thisShip.GetCommand(command,targetShipdata,point_id);
+        int target_id = -1;
+        switch (command)
+        {
+            case Command.SetTargetShip:
+                target_id = (target != null) ? target.GetComponent<ShipMotor>().thisShip.p.Id : -1;
+                var targetShipData = (target != null) ? target.GetComponent<ShipMotor>().thisShip.p : null;
+                player.GetComponent<ShipMotor>().thisShip.GetCommand(command, targetShipData, point_id);
+
+                break;
+            case Command.SetTarget:
+                target_id = (target != null) ? target.GetComponent<SOParametres>().thisServerObject.Id : -1;
+                var targetData = (target != null) ? target.GetComponent<SOParametres>().thisServerObject : null;
+                player.GetComponent<ShipMotor>().thisShip.GetCommand(command, targetData, point_id);
+
+                break;
+        }
+        Debug.Log(command+" "+target_id);
         GameManager.SendPlayerShipCommands(command, target_id, point_id);
     }
     public void GoTo()

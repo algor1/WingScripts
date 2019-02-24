@@ -274,45 +274,44 @@ public class Space : MonoBehaviour
 
     void SOListUpdate(SpaceObject[] soFromServer)
     {
-        while (true)
+
+        //          Debug.Log(" забираем инфу SO с сервера ???");   
+        //      print ("1");
+        //Создаем копию dict nearestShips чтобы узнать какие нужно удалить
+        Dictionary<int, int> SOsForDeletionList = new Dictionary<int, int>();
+        foreach (int key in nearestSOs.Keys)
         {
-            //          Debug.Log(" забираем инфу SO с сервера ???");   
-            //      print ("1");
-            //Создаем копию dict nearestShips чтобы узнать какие нужно удалить
-            Dictionary<int, int> SOsForDeletionList = new Dictionary<int, int>();
-            foreach (int key in nearestSOs.Keys)
-            {
-                SOsForDeletionList.Add(key, key);
-                //              Debug.Log (shipsForDeletionList);
-                //              print (key);
-            }
-
-            //      Debug.Log (serverShipslist.Count);
-            for (int i = 0; i < soFromServer.Length; i++)
-            {
-                //print(serverShipslist[i].p.id);
-                if (SOsForDeletionList.Remove(soFromServer[i].Id))
-                {
-                    UpdateSO(soFromServer[i]);
-                    //print ("4");
-                }
-                else
-                {
-                    Debug.Log("add SO " + soFromServer[i].VisibleName);
-                    AddSO(soFromServer[i]);
-                    UpdateSO(soFromServer[i]);
-                }
-
-            }
-            //удаляем корабли которых небыло в списке
-            foreach (int key in SOsForDeletionList.Keys)
-            {
-                DeleteSO(key);
-
-
-            }
-            //          Debug.Log ("!!!!!!!!!!!!!!!! ended !!!!!!!!!!!!!!!!");
+            SOsForDeletionList.Add(key, key);
+            //              Debug.Log (shipsForDeletionList);
+            //              print (key);
         }
+
+        //      Debug.Log (serverShipslist.Count);
+        for (int i = 0; i < soFromServer.Length; i++)
+        {
+            //print(serverShipslist[i].p.id);
+            if (SOsForDeletionList.Remove(soFromServer[i].Id))
+            {
+                UpdateSO(soFromServer[i]);
+                //print ("4");
+            }
+            else
+            {
+                Debug.Log("add SO " + soFromServer[i].VisibleName);
+                AddSO(soFromServer[i]);
+                UpdateSO(soFromServer[i]);
+            }
+
+        }
+        //удаляем корабли которых небыло в списке
+        foreach (int key in SOsForDeletionList.Keys)
+        {
+            DeleteSO(key);
+
+
+        }
+        //          Debug.Log ("!!!!!!!!!!!!!!!! ended !!!!!!!!!!!!!!!!");
+        
     }
 
     //  ---------------------  SO END ---------------------------------
