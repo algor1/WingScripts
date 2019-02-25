@@ -205,17 +205,16 @@ public class Indicators : MonoBehaviour
                 gr.Raycast(ped, results);
                 if (results.Count > 0)
                 {
-                    //					print (results [0]);
+
                     if (indicatorsList_sh.Contains(results[0].gameObject))
                     {
-                        Debug.Log(results[0].gameObject.GetComponent<IndicatorLink>().linkedObj);//.GetComponent<ShipMotor>().thisShip.p.visibleName);
+                        //Debug.Log(results[0].gameObject.GetComponent<IndicatorLink>().linkedObj);//.GetComponent<ShipMotor>().thisShip.p.visibleName);
                         spaceManager.GetComponent<CommandManager>().SendUserCommand(SpaceObjects.Command.SetTargetShip, results[0].gameObject.GetComponent<IndicatorLink>().linkedObj);
                     }
                     if  (indicatorsList_so.Contains (results [0].gameObject)) {
-                    Debug.Log (results [0].gameObject.GetComponent<IndicatorLink> ().linkedObj);//.GetComponent<ShipMotor>().thisShip.p.visibleName);
+                    //Debug.Log (results [0].gameObject.GetComponent<IndicatorLink> ().linkedObj);//.GetComponent<ShipMotor>().thisShip.p.visibleName);
                         spaceManager.GetComponent<CommandManager>().SendUserCommand(SpaceObjects.Command.SetTarget, results[0].gameObject.GetComponent<IndicatorLink>().linkedObj);
 
-                        Debug.Log(" playerobj.GetComponent<ShipMotor> ().SetTarget(results [0].gameObject.GetComponent<IndicatorLink> ().linkedObj.GetComponent<SOParametres>().thisServerObject);");
                     }
                 }
             }

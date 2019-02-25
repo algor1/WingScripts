@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
 
         using (var message = e.GetMessage())
         {
-            Debug.Log(message.Tag + "  ");
+            Debug.Log("Tag  "+message.Tag);
             // Check if message is meant for this plugin
             if (message.Tag < Tags.TagsPerPlugin * Tags.Game || message.Tag >= Tags.TagsPerPlugin * (Tags.Game + 1))
                 return;
@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
                         {
                             ShipData[] nearestShipDataArray = reader.ReadSerializables<ShipData>();
 
-                            Debug.Log($"Nearest ships" + nearestShipDataArray.Length);
+                            //Debug.Log($"Nearest ships" + nearestShipDataArray.Length);
                             //ChatManager.ServerMessage(friendName + " wants to add you as a friend!", MessageType.Info);
 
                             onNearestShipData?.Invoke(nearestShipDataArray);
@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
                         {
                             SpaceObject[] nearestSpaceObjectArray = reader.ReadSerializables<SpaceObject>();
 
-                            Debug.Log($"Nearest ships" + nearestSpaceObjectArray.Length);
+                            //Debug.Log($"Nearest so " + nearestSpaceObjectArray.Length);
                             //ChatManager.ServerMessage(friendName + " wants to add you as a friend!", MessageType.Info);
 
                             onNearestSpaceObject?.Invoke(nearestSpaceObjectArray);

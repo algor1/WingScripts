@@ -167,7 +167,8 @@ namespace SpaceObjects
         {
             NewTargetToMove = newTarget;
             NewTargetToAtack = newTarget.Type== TypeSO.ship ? newTarget : null;
-            Console.WriteLine("{0} id {1} target to move {2} , target to atack {3}",  newTarget.Type, p.Id, NewTargetToMove?.Id, NewTargetToAtack?.Id);
+            Debug.Log( "set target " + newTarget.VisibleName);
+            //Console.WriteLine("{0} id {1} target to move {2} , target to atack {3}",  newTarget.Type, p.Id, NewTargetToMove?.Id, NewTargetToAtack?.Id);
         }
         public void GoToTarget()
         {
@@ -176,7 +177,9 @@ namespace SpaceObjects
                 zBeforeRotation = p.Rotation.eulerAngles.z;
                 complexCommand = ComandType.goTo;
                 TargetToMove = NewTargetToMove;
-                Console.WriteLine("{0} id {1} moving to {2} id{3}", p.Type, p.Id, NewTargetToMove?.Type, NewTargetToMove?.Id);
+
+                Debug.Log("{0} id {1} moving to {2} id{3}"+p.Type+ p.Id+ NewTargetToMove?.Type+ NewTargetToMove?.Id);
+                //Console.WriteLine("{0} id {1} moving to {2} id{3}", p.Type, p.Id, NewTargetToMove?.Type, NewTargetToMove?.Id);
 
                 //			oldRotation = p.SO.rotation;
 

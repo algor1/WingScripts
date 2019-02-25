@@ -28,7 +28,9 @@ public class CommandManager : MonoBehaviour
                 target_id = (target != null) ? target.GetComponent<SOParametres>().thisServerObject.Id : -1;
                 var targetData = (target != null) ? target.GetComponent<SOParametres>().thisServerObject : null;
                 player.GetComponent<ShipMotor>().thisShip.GetCommand(command, targetData, point_id);
-
+                break;
+            default:
+                player.GetComponent<ShipMotor>().thisShip.GetCommand(command,null, point_id);
                 break;
         }
         Debug.Log(command+" "+target_id);
