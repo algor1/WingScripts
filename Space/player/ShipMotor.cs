@@ -42,15 +42,15 @@ public class ShipMotor : MonoBehaviour
 
     private void InitWeapons()
     {
-        //if (thisShip.weapons.Count <= weaponPoints.Count)
-        //{
-        //    for (int i = 0; i < thisShip.weapons.Count; i++)
-        //    {
-        //        thisShip.weapons[i].SetWeaponPoint(weaponPoints[i]);
-        //        weaponPoints[i].GetComponent<WeaponPoint>().Init(thisShip.weapons[i].p.type);
-        //        Debug.Log(thisShip.p.visibleName + " init weapon point " + thisShip.weapons[i].p.type + i);
-        //    }
-        //}
+        if (thisShip.Weapons.Length <= weaponPoints.Count)
+        {
+            for (int i = 0; i < thisShip.Weapons.Length; i++)
+            {
+                thisShip.Weapons[i].SetWeaponPoint(weaponPoints[i]);
+                weaponPoints[i].GetComponent<WeaponPoint>().Init(thisShip.Weapons[i].p.Type);
+                Debug.Log(thisShip.p.VisibleName + " init weapon point " + thisShip.Weapons[i].p.Type + i);
+            }
+        }
     }
     private void SignOnShipEvents()
     {

@@ -231,6 +231,11 @@ public class Space : MonoBehaviour
 
 
     }
+
+    public GameObject GetShip(int ship_id)
+    {
+
+    }
     //  ---------------------  SHIPS END ---------------------------------
 
     //  ---------------------  SO (Space Objects) ---------------------------------
