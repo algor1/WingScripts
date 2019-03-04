@@ -87,8 +87,8 @@ public class Space : MonoBehaviour
             SetZeroPoint(shipData.Position);
             Debug.Log("player prefub " + shipData.Prefab);
             Player = (GameObject)Instantiate(Resources.Load(shipData.Prefab, typeof(GameObject)), shipData.Position - zeroPoint, shipData.Rotation);
-            ShipMotor shipMotor = Player.AddComponent<ShipMotor>() as ShipMotor;
-            shipMotor.Init(shipData, this.gameObject);
+            //ShipMotor shipMotor = Player.AddComponent<ShipMotor>() as ShipMotor;
+            Player.GetComponent<ShipMotor>().Init(shipData, this.gameObject);
         }
         GameManager.onPlayerShipData -= InitSpace; //?? 
         GameManager.onPlayerShipData += UpdatePlayer; //?? 
