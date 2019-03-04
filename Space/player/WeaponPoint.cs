@@ -24,11 +24,11 @@ public class WeaponPoint : MonoBehaviour {
 	}
 
 
-	public void StartFire (Ship target)
+	public void StartFire (int targetId)
 	{
 //        Debug.Log("StartFire  "+ type);
 
-        GameObject shipObject=
+        GameObject target = spaceManager.GetComponent<Space>().GetShip(targetId); 
         switch (type)
         {
             case WeaponData.WeaponType.laser:
@@ -36,7 +36,7 @@ public class WeaponPoint : MonoBehaviour {
                 gameObject.GetComponent<LaserBeam>().StartFire(target);
                 break;
             case WeaponData.WeaponType.missile:
-                gameObject.GetComponent<MissileLauncher>().Fire(target.host);
+                gameObject.GetComponent<MissileLauncher>().Fire(target);
                 break;
         }
 	}
@@ -51,6 +51,5 @@ public class WeaponPoint : MonoBehaviour {
             case WeaponData.WeaponType.missile:
                 break;
         }
-		
 	}
 }

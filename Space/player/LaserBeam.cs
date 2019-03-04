@@ -12,7 +12,7 @@ public class LaserBeam : MonoBehaviour {
 	LineRenderer laser_shot;
 	public Material laserMaterial;
 	private bool laser_enabled;
-	private Ship target;
+	private GameObject target;
 	// Use this for initialization
 	void Start () {
 		initLaser ();
@@ -24,9 +24,9 @@ public class LaserBeam : MonoBehaviour {
 	void Update () {
 		if (laser_shot.enabled  && target!=null) {
 //			Debug.Log("from "+ transform.position+ "!!!!!!!!pew to " + target.p.SO.visibleName+" p "+ target.host.transform.position);
-			if (target.host != null) {
+			if (target != null) {
 				laser_shot.SetPosition (0, transform.position);
-				laser_shot.SetPosition (1, target.host.GetComponent<Transform> ().position);
+				laser_shot.SetPosition (1, target.GetComponent<Transform> ().position);
 			}
 		}
 		if (target == null) {
@@ -88,7 +88,7 @@ public class LaserBeam : MonoBehaviour {
 	}
 
 
-	public void StartFire (Ship _target)
+	public void StartFire (GameObject _target)
 	{
 		target = _target;
 //		Debug.Log ("====laser pew to " + target.p.SO.visibleName);

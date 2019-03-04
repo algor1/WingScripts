@@ -234,8 +234,10 @@ public class Space : MonoBehaviour
 
     public GameObject GetShip(int ship_id)
     {
-
+        if (nearestShips.ContainsKey(ship_id)) return nearestShips[ship_id];
+        return null;
     }
+
     //  ---------------------  SHIPS END ---------------------------------
 
     //  ---------------------  SO (Space Objects) ---------------------------------
