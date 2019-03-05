@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
 
     #region Network Calls
 
-    public static void SendPlayerShipCommands(Command command, int target_id,int point_id)
+    public static void SendPlayerShipCommands(ShipCommand command, int target_id,int point_id)
     {
         using (var writer = DarkRiftWriter.Create())
         {

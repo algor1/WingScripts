@@ -9,7 +9,7 @@ namespace SpaceObjects
 {
     public enum ComandType { warpTo, goTo, landTo, none, open };
     public enum ShipEvenentsType { spawn, warp, warmwarp, move, stop, land, hide, reveal, destroyed, open };
-    public enum Command { MoveTo, WarpTo, Atack, SetTarget, SetTargetShip, LandTo, Equipment, Open, TakeOff };
+    public enum ShipCommand { MoveTo, WarpTo, Atack, SetTarget, SetTargetShip, LandTo, Equipment, Open, TakeOff };
     public enum TypeSO { asteroid, ship, station, waypoint, container };
 
 
