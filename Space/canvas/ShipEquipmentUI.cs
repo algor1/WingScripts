@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class ShipEquipmentUI : MonoBehaviour
 {
     private GameObject player;
+    private GameObject spaceManager;
     private Weapon[] weapons;
     private Equipment[] equipments;
     [SerializeField]
@@ -18,8 +19,9 @@ public class ShipEquipmentUI : MonoBehaviour
 
 
 
-    public void Init(GameObject _player)
+    public void Init(GameObject _player,GameObject _spaceManager)
     {
+        spaceManager = _spaceManager;
 		player=_player;
         weapons = player.GetComponent<ShipMotor>().thisShip.Weapons;
         equipments = player.GetComponent<ShipMotor>().thisShip.Equipments;
@@ -33,11 +35,11 @@ public class ShipEquipmentUI : MonoBehaviour
 
         {
             GameObject we_button = (GameObject)Instantiate(eqPrefab);
-            we_button.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
+            
+            we_button.transform.SetParent( gameObject.transform, false);
             we_button.GetComponent<RectTransform>().position += Vector3.right * (i * -50 - 120);
-            //			var ship_obj = player.GetComponent<ShipMotor>().AtackTarget(i) ;
             int _i = i;
-            Debug.Log(" we_button.GetComponent<Button>().onClick.AddListener( ()=> { player.GetComponent<ShipMotor>().AtackTarget(_i) ;});");
+            we_button.GetComponent<Button>().onClick.AddListener( ()=> { spaceManager.GetComponent<CommandManager>().SendUserCommand(Command.Atack, null,_i) ;});
 
         }
     }
@@ -46,11 +48,10 @@ public class ShipEquipmentUI : MonoBehaviour
         for (int i = 0; i < equipments.Length; i++)
         {
             GameObject eq_button = (GameObject)Instantiate(eqPrefab);
-            eq_button.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
+            eq_button.transform.SetParent(gameObject.transform, false);
             eq_button.GetComponent<RectTransform>().position += Vector3.right * (i * -50 - 300);
-            //			var ship_obj = player.GetComponent<ShipMotor>().AtackTarget(i) ;
             int _i = i;
-            Debug.Log(" eq_button.GetComponent<Button>().onClick.AddListener( ()=> { player.GetComponent<ShipMotor>().StartEquipment(_i) ;});");
+            eq_button.GetComponent<Button>().onClick.AddListener(() => { spaceManager.GetComponent<CommandManager>().SendUserCommand(Command.Equipment, null, _i); });
         }
     }
 

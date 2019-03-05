@@ -262,8 +262,8 @@ public class ShipMotor : MonoBehaviour
                 //    spaceManager.GetComponent<ShowEnv>().DestroyShip(thisShip.p.id);
                 //    break;
                 //case ShipEvenentsType.open:
-                //GameObject canvasObj = GameObject.Find("Canvas");
-                //canvasObj.GetComponent<ShowMenus>().ShowInventory(thisShip.p.id, thisShip.targetToMove.id);
+                //GameObject canvas = GameObject.Find("Canvas");
+                //canvas.GetComponent<ShowMenus>().ShowInventory(thisShip.p.id, thisShip.targetToMove.id);
                 //break;
         }
 

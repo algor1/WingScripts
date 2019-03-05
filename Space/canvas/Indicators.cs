@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class Indicators : MonoBehaviour
 {
     [SerializeField]
-    private GameObject playerobj;
+    private GameObject player;
     [SerializeField]
     private GameObject spaceManager;
     [SerializeField]
@@ -29,9 +29,9 @@ public class Indicators : MonoBehaviour
     //private Dictionary<int,GameObject> nearestShips;
 
 
-    public void Init(GameObject _player)
+    public void Init()
     {
-        playerobj = spaceManager.GetComponent<Space>().Player;
+        player = spaceManager.GetComponent<Space>().Player;
         CreateIndicators_sh();
         CreateIndicators_so ();
         //CreateIndicators_wp ();

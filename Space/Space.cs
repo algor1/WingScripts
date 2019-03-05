@@ -9,7 +9,7 @@ public class Space : MonoBehaviour
     private Vector3 zeroPoint = Vector3.zero;
 
     [SerializeField]
-    private GameObject canvasobj;
+    private GameObject canvas;
     [SerializeField]
     private GameObject mainCamera;
     private Dictionary<int, GameObject> nearestShips;
@@ -57,12 +57,12 @@ public class Space : MonoBehaviour
         CreateSolarSystem();
         Debug.Log("Init player ...");
         CreatePlayer(playerShipData);
-        Debug.Log("Init canvas system...");
-        LoadCanvasSystem();
         Debug.Log("Init user command system...");
         GetComponent<CommandManager>().Init(Player);
+        Debug.Log("Init canvas system...");
+        LoadCanvasSystem();
         mainCamera.GetComponent<MainCamControl>().Init(Player);
-
+        
         GameManager.onNearestShipData += ShipsListUpdate;
         GameManager.onNearestSpaceObject += SOListUpdate;
 
@@ -74,8 +74,8 @@ public class Space : MonoBehaviour
     }
     void LoadCanvasSystem()
     {
-        canvasobj.GetComponent<Indicators>().Init(Player);
-        canvasobj.GetComponent<ShipEquipmentUI>().Init(Player);
+        canvas.GetComponent<Indicators>().Init();
+        canvas.GetComponent<ShipEquipmentUI>().Init(Player,gameObject);
 
     }
 
@@ -142,13 +142,13 @@ public class Space : MonoBehaviour
         //gObj.GetComponent<ShipMotor> ().thisShip.SetTarget (player.GetComponent<ShipMotor> ().thisShip.p.SO);
         //Debug.Log (ship.p.SO.visibleName);
         nearestShips.Add(shipData.Id, gObj);
-        canvasobj.GetComponent<Indicators>().AddIndicator_sh(gObj);
+        canvas.GetComponent<Indicators>().AddIndicator_sh(gObj);
 
     }
 
     public void DeleteShip(int ship_id)
     {
-        canvasobj.GetComponent<Indicators>().DeleteIndicator_sh(ship_id);
+        canvas.GetComponent<Indicators>().DeleteIndicator_sh(ship_id);
         if (nearestShips.ContainsKey(ship_id))
         {
             //            if (!nearestShips[ship_id].GetComponent<ShipMotor>().thisShip.p.destroyed)
@@ -252,13 +252,13 @@ public class Space : MonoBehaviour
         //      Debug.Log (so.visibleName);
         nearestSOs.Add(so.Id, SObj);
         Debug.Log("add SO id " + so.Id);
-        canvasobj.GetComponent<Indicators>().AddIndicator_so(SObj);
+        canvas.GetComponent<Indicators>().AddIndicator_so(SObj);
 
     }
 
     void DeleteSO(int so_id)
     {
-        canvasobj.GetComponent<Indicators>().DeleteIndicator_so(so_id);
+        canvas.GetComponent<Indicators>().DeleteIndicator_so(so_id);
         if (nearestSOs.ContainsKey(so_id))
         {
             Destroy(nearestSOs[so_id]);

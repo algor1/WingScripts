@@ -35,7 +35,7 @@
 //    [SerializeField]
 //	private GameObject serverLandObj;
 //	[SerializeField]
-//	private GameObject canvasobj;
+//	private GameObject canvas;
 
 
 
@@ -130,12 +130,12 @@
 ////		Debug.Log (so.visibleName);
 //		nearestSOs.Add(so.id, SObj);
 //		Debug.Log ("add SO id " + so.id);
-//		canvasobj.GetComponent<Indicators> ().AddIndicator_so (SObj);
+//		canvas.GetComponent<Indicators> ().AddIndicator_so (SObj);
 
 //	}
 
 //	void DeleteSO(int so_id){
-//		canvasobj.GetComponent<Indicators> ().DeleteIndicator_so (so_id);
+//		canvas.GetComponent<Indicators> ().DeleteIndicator_so (so_id);
 //		if (nearestSOs.ContainsKey (so_id)) {
 //			Destroy (nearestSOs [so_id]);
 //			nearestSOs.Remove (so_id);
@@ -204,12 +204,12 @@
 //		gObj.GetComponent<ShipMotor> ().thisShip.SetTarget (player.GetComponent<ShipMotor> ().thisShip.p.SO);
 //		Debug.Log (ship.p.SO.visibleName);
 //		nearestShips.Add(ship.p.SO.id, gObj);
-//		canvasobj.GetComponent<Indicators> ().AddIndicator_sh (gObj);
+//		canvas.GetComponent<Indicators> ().AddIndicator_sh (gObj);
 
 //	}
 
 //	public void DeleteShip(int ship_id){
-//		canvasobj.GetComponent<Indicators> ().DeleteIndicator_sh (ship_id);
+//		canvas.GetComponent<Indicators> ().DeleteIndicator_sh (ship_id);
 //		if (nearestShips.ContainsKey (ship_id)) {
 ////            if (!nearestShips[ship_id].GetComponent<ShipMotor>().thisShip.p.destroyed)
 //            {
