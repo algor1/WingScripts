@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SpaceObjects;
 using UnityEngine;
 using UnityEngine.UI;
+using SpaceObjects;
 
 
 public class ShipEquipmentUI : MonoBehaviour
@@ -39,7 +40,7 @@ public class ShipEquipmentUI : MonoBehaviour
             we_button.transform.SetParent( gameObject.transform, false);
             we_button.GetComponent<RectTransform>().position += Vector3.right * (i * -50 - 120);
             int _i = i;
-            we_button.GetComponent<Button>().onClick.AddListener( ()=> { spaceManager.GetComponent<CommandManager>().SendUserCommand(Command.Atack, null,_i) ;});
+            we_button.GetComponent<Button>().onClick.AddListener( ()=> { spaceManager.GetComponent<CommandManager>().SendUserCommand(ShipCommand.Atack, null,_i) ;});
 
         }
     }
@@ -51,7 +52,7 @@ public class ShipEquipmentUI : MonoBehaviour
             eq_button.transform.SetParent(gameObject.transform, false);
             eq_button.GetComponent<RectTransform>().position += Vector3.right * (i * -50 - 300);
             int _i = i;
-            eq_button.GetComponent<Button>().onClick.AddListener(() => { spaceManager.GetComponent<CommandManager>().SendUserCommand(Command.Equipment, null, _i); });
+            eq_button.GetComponent<Button>().onClick.AddListener(() => { spaceManager.GetComponent<CommandManager>().SendUserCommand(ShipCommand.Equipment, null, _i); });
         }
     }
 
