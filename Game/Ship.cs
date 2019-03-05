@@ -34,14 +34,15 @@ namespace SpaceObjects
         private ComandType complexCommand;
     
         private bool warpActivated;
-        public bool warpCoroutineStarted;
+        private bool warpStarted;
+
         //public bool landed;
         private bool atackAI;
         public Weapon[] Weapons;
         public Equipment[] Equipments;
         
         public int TickDeltaTime=20; //{get;set;}
-        public int restoreTickDeltaTime = 3000; //TODO store it from shipdata
+        public int RestoreTickDeltaTime=3000; //TODO store it from shipdata
 
 
 
@@ -140,37 +141,45 @@ namespace SpaceObjects
 
 #region user commands
 
-        public void GetCommand(Command command, SpaceObject target=null,int point_id=0)
+        public void Command(ShipCommand command, SpaceObject target=null,int point_id=0)
         {
+            if (target != null)
+                {
+                    SetTarget(target);
+                }
+
             switch (command)
             {
-                case Command.MoveTo:
-                    if (target == null)
-                    {
-                        GoToTarget();
-                        break;
-                    }
-                    SetTarget(target);
+                case ShipCommand.MoveTo:
                     GoToTarget();
                     break;
-                case Command.SetTarget:
-                    SetTarget(target);
+                //case ShipCommand.SetTarget:
+                //    SetTarget(target);
+                //    break;
+                //case ShipCommand.SetTargetShip:
+                //    SetTarget(target);
+                //    break;
+
+                case ShipCommand.Atack:
+                    Atack_target(point_id);
                     break;
-                case Command.SetTargetShip:
-                    SetTarget(target);
+
+                case ShipCommand.WarpTo:
+                    WarpToTarget();
                     break;
+                
             }
         }
 
 
-        public void SetTarget(SpaceObject newTarget)
+        private void SetTarget(SpaceObject newTarget)
         {
             NewTargetToMove = newTarget;
             NewTargetToAtack = newTarget.Type== TypeSO.ship ? newTarget : null;
             Debug.Log( "set target " + newTarget.VisibleName);
             //Console.WriteLine("{0} id {1} target to move {2} , target to atack {3}",  newTarget.Type, p.Id, NewTargetToMove?.Id, NewTargetToAtack?.Id);
         }
-        public void GoToTarget()
+        private void GoToTarget()
         {
             if (NewTargetToMove != null)
             {
@@ -182,12 +191,9 @@ namespace SpaceObjects
                 //Console.WriteLine("{0} id {1} moving to {2} id{3}", p.Type, p.Id, NewTargetToMove?.Type, NewTargetToMove?.Id);
 
                 //			oldRotation = p.SO.rotation;
-
-
             }
-
         }
-        public void WarpToTarget()
+        private void WarpToTarget()
         {
             if (NewTargetToMove != null && Vector3.Distance(p.Position, NewTargetToMove.Position) > 100000)
             {
@@ -207,7 +213,7 @@ namespace SpaceObjects
             }
 
         }
-        public void StartEquipment()
+        private void StartEquipment()
         {
             for (int i = 0; i < Equipments.Length; i++)
             {
@@ -222,7 +228,7 @@ namespace SpaceObjects
             }
 
         }
-        public void StopEquipment()
+        private void StopEquipment()
         {
             for (int i = 0; i < Equipments.Length; i++)
             {
@@ -231,7 +237,7 @@ namespace SpaceObjects
             }
 
         }
-        public void LandToTarget()
+        private void LandToTarget()
         {
             if (NewTargetToMove != null)
             {
@@ -241,7 +247,7 @@ namespace SpaceObjects
                 TargetToMove = NewTargetToMove;
             }
         }
-        public void OpenTarget()
+       private void OpenTarget()
         {
             if (NewTargetToMove != null)
             {
@@ -252,7 +258,7 @@ namespace SpaceObjects
                 //            oldRotation = p.SO.rotation;
             }
         }
-        public void Atack_target(int weaponnum)
+        private void Atack_target(int weaponnum)
         {
             if (NewTargetToAtack != null)
             {
@@ -268,7 +274,7 @@ namespace SpaceObjects
             }
 
         }
-        public void StopFire(int weaponnum)
+        private void StopFire(int weaponnum)
         {
             //atack = false;
             Weapons[weaponnum].Stop();
@@ -427,18 +433,18 @@ namespace SpaceObjects
             {
                 if (p.Hull < p.Hull_full)
                 {
-                    p.Hull += p.Hull_restore * TickDeltaTime/1000f;
+                    p.Hull += p.Hull_restore * RestoreTickDeltaTime / 1000f;
                 }
                 else { p.Hull = p.Hull_full; }
                 if (p.Shield < p.Shield_full)
-                { p.Shield += p.Shield_restore * TickDeltaTime/1000f; }
+                { p.Shield += p.Shield_restore * RestoreTickDeltaTime / 1000f; }
                 else { p.Shield = p.Shield_full; }
 
-                if (p.Armor < p.Armor_full) { p.Armor += p.Armor_restore * TickDeltaTime/1000f; }
+                if (p.Armor < p.Armor_full) { p.Armor += p.Armor_restore * RestoreTickDeltaTime / 1000f; }
                 else { p.Armor = p.Armor_full; }
-                if (p.Capasitor < p.Capasitor_full) { p.Capasitor += p.Capasitor_restore * TickDeltaTime/1000f; }
+                if (p.Capasitor < p.Capasitor_full) { p.Capasitor += p.Capasitor_restore * RestoreTickDeltaTime / 1000f; }
                 else { p.Capasitor = p.Capasitor_full; }
-                await Task.Delay(restoreTickDeltaTime);
+                await Task.Delay(RestoreTickDeltaTime);
             }
         }
         private void Destroyed()
@@ -476,24 +482,27 @@ namespace SpaceObjects
         //}
         public async Task Warpdrive()
         {
-            warpCoroutineStarted = true;
+            
+            warpStarted = true;
+            OnChangeStateCall(ShipEvenentsType.warmwarp);
             await Task.Delay((int)(1000f*p.WarpDriveStartTime));
             float warpDistance = Vector3.Distance(p.Position, TargetToMove.Position);
             float warpTime = warpDistance / p.WarpSpeed;
+            OnChangeStateCall(ShipEvenentsType.warp);
             Hide(); //TODO damage=0
             warpActivated = true;
 
-
-            await Task.Delay((int)warpTime*1000);
-            Spawn(TargetToMove.Position - Vector3.forward * 10);
-
+            await Task.Delay((int)warpTime*1000f);
+            Spawn(TargetToMove.Position - Vector3.forward * 10);//10 metres before target
+            OnChangeStateCall(ShipEvenentsType.spawn);
             Reveal();
 
             warpActivated = false;
-            warpCoroutineStarted = false;
+            warpStarted = false;
             p.Speed = p.SpeedMax * 0.1f;
             moveCommand = MoveType.stop;
             complexCommand = ComandType.none;
+            OnChangeStateCall(ShipEvenentsType.stop);
         }
         private void Spawn(Vector3 _position){
             OnSpawnCall(p.Id);
@@ -511,7 +520,7 @@ namespace SpaceObjects
         {
             //Console.WriteLine($"Tick {p.VisibleName}");
 
-            //Agr(); //TODO too heavy fo tick may be it must hav diffeent time of activation
+            //Agr(); //TODO too heavy fo tick may be it must have diffeent time of activation
             //RestoreTick();
             CommandManager();
             Move();
