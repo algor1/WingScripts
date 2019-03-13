@@ -11,5 +11,6 @@
         public const ushort MessageFailed = 4 + Shift;
         public const ushort PlayerShipData = 5 + Shift;
         public const ushort NearestSpaceObjects = 6 + Shift;
+        public const ushort ShipCommand = 7 + Shift;
     }
 }

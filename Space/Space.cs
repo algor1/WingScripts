@@ -92,6 +92,7 @@ public class Space : MonoBehaviour
         }
         GameManager.onPlayerShipData -= InitSpace; //?? 
         GameManager.onPlayerShipData += UpdatePlayer; //?? 
+        GameManager.onNearestShipCommand += SendShipCommand;
     }
     void UpdatePlayer(ShipData shipData)
     {
@@ -237,6 +238,21 @@ public class Space : MonoBehaviour
         if (nearestShips.ContainsKey(ship_id)) return nearestShips[ship_id];
         return null;
     }
+    private void SendShipCommand(int ship_id, ShipCommand command, int target_id, int point)
+    {
+        if (nearestShips.ContainsKey(ship_id))
+        {
+            SpaceObject target=null;
+            if (target_id != -1)
+            {
+                //TODO может случится что цель не находится в поле видимости игрока must найти варианты решения
+                if (nearestShips.ContainsKey(target_id)) target = nearestShips[target_id].GetComponent<ShipMotor>().thisShip.p;
+                if (nearestSOs.ContainsKey(target_id)) target = nearestSOs[target_id].GetComponent<SOParametres>().thisServerObject;
+            }
+            nearestShips[ship_id].GetComponent<ShipMotor>().thisShip.Command(command,target,point);
+        }
+    }
+
 
     //  ---------------------  SHIPS END ---------------------------------
 

@@ -13,19 +13,19 @@ public class GameManager : MonoBehaviour
     //[SerializeField]
     //private GameObject ShowEnv;
     #region Events
-
+    //TODO rewrite to eventhandlers
     public delegate void NearestShipsDataEventHandler(ShipData[] nearestShipData);
     public delegate void NearestSpaceObjectEventHandler(SpaceObject[] nearestSpaceObject);
 
     public delegate void PlayerShipDataEventHandler(ShipData shipData);
+    public delegate void NearestShipCommandEventHandler(int ship_id, ShipCommand command, int target , int point);
 
 
 
     public static event NearestShipsDataEventHandler onNearestShipData;
     public static event NearestSpaceObjectEventHandler onNearestSpaceObject;
-
     public static event PlayerShipDataEventHandler onPlayerShipData;
-
+    public static event NearestShipCommandEventHandler onNearestShipCommand;
 
 
 
@@ -120,6 +120,18 @@ public class GameManager : MonoBehaviour
                             //ChatManager.ServerMessage(friendName + " wants to add you as a friend!", MessageType.Info);
 
                             onNearestSpaceObject?.Invoke(nearestSpaceObjectArray);
+                        }
+                        break;
+                    }
+                case GameTags.ShipCommand:
+                    {
+                        using (var reader = message.GetReader())
+                        {
+                            int shipId = reader.ReadInt32();
+                            ShipCommand command = (ShipCommand)reader.ReadUInt32();
+                            int target_id = reader.ReadInt32();
+                            int point_id = reader.ReadInt32();
+                            onNearestShipCommand?.Invoke(shipId,command,target_id,point_id);
                         }
                         break;
                     }
