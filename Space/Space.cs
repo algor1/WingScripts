@@ -137,9 +137,9 @@ public class Space : MonoBehaviour
     {
         Debug.Log("prefub " + shipData.Prefab);
         GameObject gObj = (GameObject)Instantiate(Resources.Load(shipData.Prefab, typeof(GameObject)), shipData.Position - zeroPoint, shipData.Rotation);
-        ShipMotor shipMotor = gObj.AddComponent<ShipMotor>() as ShipMotor;
+        //ShipMotor shipMotor = gObj.AddComponent<ShipMotor>() as ShipMotor;
 
-        shipMotor.Init(shipData, this.gameObject);
+        gObj.GetComponent<ShipMotor>().Init(shipData, this.gameObject);
         //gObj.GetComponent<ShipMotor> ().thisShip.SetTarget (player.GetComponent<ShipMotor> ().thisShip.p.SO);
         //Debug.Log (ship.p.SO.visibleName);
         nearestShips.Add(shipData.Id, gObj);
