@@ -172,7 +172,7 @@ public class Space : MonoBehaviour
     void UpdateShip(ShipData shipData)
     {
 
-        nearestShips[shipData.Id].GetComponent<ShipMotor>().thisShip.p = shipData;
+        nearestShips[shipData.Id].GetComponent<ShipMotor>().thisShip.p.Update( shipData);
 
     }
 

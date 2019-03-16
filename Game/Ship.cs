@@ -48,7 +48,9 @@ namespace SpaceObjects
 
         public Ship(ShipData shipData)
         {
-            p = new ShipData(shipData,this); ;
+            p = new ShipData(shipData,this);
+
+
             if  (p.Rotation == new Quaternion(0f, 0f, 0f, 0f)) p.Rotation = new Quaternion(0f, 0f, 0f, 1f);
 
 

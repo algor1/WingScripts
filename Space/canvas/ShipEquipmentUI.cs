@@ -35,11 +35,11 @@ public class ShipEquipmentUI : MonoBehaviour
         for (int i = 0; i < weapons.Length; i++)
 
         {
+            int _i = weapons[i].p.Point;
             GameObject we_button = (GameObject)Instantiate(eqPrefab);
             
             we_button.transform.SetParent( gameObject.transform, false);
-            we_button.GetComponent<RectTransform>().position += Vector3.right * (i * -50 - 120);
-            int _i = i;
+            we_button.GetComponent<RectTransform>().position += Vector3.right * (_i * -50 - 120);
             we_button.GetComponent<Button>().onClick.AddListener( ()=> { spaceManager.GetComponent<CommandManager>().SendUserCommand(ShipCommand.Atack, null,_i) ;});
 
         }

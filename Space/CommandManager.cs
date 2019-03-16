@@ -33,7 +33,7 @@ public class CommandManager : MonoBehaviour
                 player.GetComponent<ShipMotor>().thisShip.Command(command,null, point_id);
                 break;
         }
-        Debug.Log(command+" "+target_id);
+        Debug.Log(command+" "+target_id+"  " +point_id);
         GameManager.SendPlayerShipCommands(command, target_id, point_id);
     }
     public void GoTo()

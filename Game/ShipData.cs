@@ -95,6 +95,48 @@ namespace SpaceObjects
                 Equipments[i] = new EquipmentData(value.Equipments[i]);
             }
         }
+        public void Update(ShipData value)
+        {
+            Id = value.Id;
+            VisibleName = value.VisibleName;
+            Type = value.Type;
+            Position = value.Position;
+            Rotation = value.Rotation;
+            Speed = value.Speed;
+            Prefab = value.Prefab;
+
+            SpeedMax = value.SpeedMax;
+            RotationSpeed = value.RotationSpeed;
+            AccelerationMax = value.AccelerationMax;
+            SpeedNew = value.SpeedNew;
+
+            Hull_full = value.Hull_full;
+            Armor_full = value.Armor_full;
+            Shield_full = value.Shield_full;
+            Capasitor_full = value.Capasitor_full;
+
+            Hull = value.Hull;
+            Armor = value.Armor;
+            Shield = value.Shield;
+            Capasitor = value.Capasitor;
+
+            Hull_restore = value.Hull_restore;
+            Armor_restore = value.Armor_restore;
+            Shield_restore = value.Shield_restore;
+            Capasitor_restore = value.Capasitor_restore;
+
+
+            AgrDistance = value.AgrDistance;
+            VisionDistance = value.VisionDistance;
+
+            Destroyed = value.Destroyed;
+            Hidden = value.Hidden;
+            Mob = value.Mob;
+
+            WarpDriveStartTime = value.WarpDriveStartTime;
+            WarpSpeed = value.WarpSpeed;
+
+        }
         public new void Deserialize(DeserializeEvent e)
         {
             Id = e.Reader.ReadInt32();

@@ -79,6 +79,7 @@ namespace SpaceObjects
         }
         private async Task Fire(float sqrDistance)
         {
+            Debug.Log("fire!!! ");
             OnStartFireCall(currentTarget.p.Id);
             if (p.Type == WeaponData.WeaponType.laser)
             {
@@ -88,6 +89,7 @@ namespace SpaceObjects
             {
                 await Task.Delay((int)(Mathf.Sqrt(sqrDistance) / p.AmmoSpeed*1000f));
             }
+            Debug.Log("  boom  ! ! !");
             currentTarget?.Damage(p.Damage);
             OnStopFire(EventArgs.Empty);
         }
@@ -99,7 +101,7 @@ namespace SpaceObjects
             //activated = true;
             while (fire)
             {
-                if (currentTarget!=null&&!currentTarget.p.Destroyed)
+                if (currentTarget==null||currentTarget.p.Destroyed)
                 {
                     Stop();
                     return;
