@@ -131,10 +131,13 @@ namespace SpaceObjects
         public event EventHandler<StartFireEventArgs> StartFire;
         protected virtual void OnStartFire(StartFireEventArgs e)
         {
+            Debug.Log("---------------- onStartFire  "+e.ship_id);
             EventHandler<StartFireEventArgs> handler = StartFire;
+            handler?.Invoke(this, e);
         }
         private void OnStartFireCall(int ship_id)
         {
+
             StartFireEventArgs args = new StartFireEventArgs();
             args.ship_id=ship_id;
             OnStartFire(args);
@@ -144,22 +147,28 @@ namespace SpaceObjects
         protected virtual void OnStopFire(EventArgs e)
         {
             EventHandler handler = StopFire;
+            handler?.Invoke(this, e);
+
         }
 
         public event EventHandler StartReload;
         protected virtual void OnStartReload(EventArgs e)
         {
             EventHandler handler = StartReload;
+            handler?.Invoke(this, e);
+
         }
 
         public event EventHandler StopReload;
         protected virtual void OnStopReload(EventArgs e)
         {
             EventHandler handler = StopReload;
-        }
-        
+            handler?.Invoke(this, e);
 
-#endregion
+        }
+
+
+        #endregion
 
     }
 

@@ -8,7 +8,7 @@ namespace SpaceObjects
 {
     public class WeaponData : IDarkRiftSerializable
     {
-        public enum WeaponType { laser, missile, projective };
+        public enum WeaponType {  missile=1, laser, projective };
         public int Point { get; set; }
         public WeaponType Type { get; set; }
         public float Damage { get; set; }

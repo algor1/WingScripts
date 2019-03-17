@@ -2,34 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SpaceObjects;
+using System;
 
 public class WeaponPoint : MonoBehaviour {
-    public WeaponData.WeaponType type;
-    public Component weapon;
     private GameObject spaceManager;
+    private Weapon weapon;
 
-	public void Init(WeaponData.WeaponType _type,GameObject _spaceManager)
+
+	public void Init(Weapon _weapon,GameObject _spaceManager)
 	{
         spaceManager = _spaceManager;
-		type = _type;
-        switch (type)
+        weapon = _weapon;
+
+        switch (weapon.p.Type)
         {
             case WeaponData.WeaponType.laser:
-                weapon = gameObject.AddComponent<LaserBeam>();
+                gameObject.AddComponent<LaserBeam>();
                 break;
 			case WeaponData.WeaponType.missile:
-				weapon = gameObject.AddComponent<MissileLauncher> ();
+				gameObject.AddComponent<MissileLauncher> ();
 				break;
         }
+        weapon.StartFire += StartFireAnimation;
+        weapon.StopFire += StopFireAnimation;
 	}
 
 
-	public void StartFire (int targetId)
+	public void StartFireAnimation (object sender, StartFireEventArgs e)
 	{
-//        Debug.Log("StartFire  "+ type);
+        Debug.Log("----------------StartFireANIMATION  " + weapon.p.Type + "  target " + e.ship_id);
+        int ship_id = e.ship_id;
+        GameObject target = spaceManager.GetComponent<Space>().GetShip(ship_id);
+        Debug.Log("StartFire  " + weapon.p.Type + "  target " + ship_id);
 
-        GameObject target = spaceManager.GetComponent<Space>().GetShip(targetId); 
-        switch (type)
+        switch (weapon.p.Type)
         {
             case WeaponData.WeaponType.laser:
    
@@ -41,9 +47,10 @@ public class WeaponPoint : MonoBehaviour {
         }
 	}
 
-	public void StopFire ()
+	public void StopFireAnimation (object sender, EventArgs e)
 	{
-        switch (type)
+        Debug.Log("----------------StopFireANIMATION  ");
+        switch (weapon.p.Type)
         {
             case WeaponData.WeaponType.laser:
                 gameObject.GetComponent<LaserBeam>().StopFire();
