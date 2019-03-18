@@ -30,13 +30,13 @@ public class ShipMotor : MonoBehaviour
 
     public void Init(ShipData _shipData, GameObject _spaceManager)
     {
+        spaceManager = _spaceManager;
 
         thisShip = new Ship(_shipData);
         SignOnShipEvents();
         Debug.Log(this);
         InitWeapons();
 
-        spaceManager = _spaceManager;
         Debug.Log("----init   " + thisShip.p.VisibleName + "  id   " + thisShip.p.Id);
     }
 
@@ -47,8 +47,7 @@ public class ShipMotor : MonoBehaviour
             for (int i = 0; i < thisShip.Weapons.Length; i++)
             {
                 //thisShip.Weapons[i].SetWeaponPoint(weaponPoints[i]);
-                var wp = weaponPoints[i].GetComponent<WeaponPoint>();
-                wp.Init(thisShip.Weapons[i], spaceManager);
+                weaponPoints[i].GetComponent<WeaponPoint>().Init(thisShip.Weapons[i], spaceManager);
 
                 Debug.Log(thisShip.p.VisibleName + " init weapon point " + thisShip.Weapons[i].p.Type + i);
             }

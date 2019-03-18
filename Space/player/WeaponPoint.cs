@@ -28,11 +28,12 @@ public class WeaponPoint : MonoBehaviour {
 	}
 
 
-	public void StartFireAnimation (object sender, StartFireEventArgs e)
+	private void StartFireAnimation (object sender, StartFireEventArgs e)
 	{
-        Debug.Log("----------------StartFireANIMATION  " + weapon.p.Type + "  target " + e.ship_id);
+        Debug.Log("----------------StartFireANIMATION  " + weapon.p.Type +" " + weapon.p.Reload+ "  target " + e.ship_id);
         int ship_id = e.ship_id;
         GameObject target = spaceManager.GetComponent<Space>().GetShip(ship_id);
+        Debug.Log("______ target " + target);
         Debug.Log("StartFire  " + weapon.p.Type + "  target " + ship_id);
 
         switch (weapon.p.Type)
