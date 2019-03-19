@@ -23,7 +23,7 @@ public class LaserBeam : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (laser_shot.enabled  && target!=null) {
-			Debug.Log("from "+ transform.position+ "!!!!!!!!pew to " + target);
+			//Debug.Log("from "+ transform.position+ "!!!!!!!!pew to " + target);
 			if (target != null) {
 				laser_shot.SetPosition (0, transform.position);
 				laser_shot.SetPosition (1, target.GetComponent<Transform> ().position);
@@ -94,7 +94,7 @@ public class LaserBeam : MonoBehaviour {
 		target = _target;
         //		Debug.Log ("====laser pew to " + target.p.SO.visibleName);
         //		Debug.Log( laser_shot.GetPosition(0)+ "    "  +  laser_shot.GetPosition(1));
-        Debug.Log("------------------  FIRE ---------------------------");
+        //Debug.Log("------------------  FIRE ---------------------------");
 
         laser_shot.enabled = true;
 
@@ -102,7 +102,7 @@ public class LaserBeam : MonoBehaviour {
 	public void StopFire ()
 	{
 		laser_shot.enabled = false;
-        Debug.Log("------------------  Stop FIRE ---------------------------");
+        //Debug.Log("------------------  Stop FIRE ---------------------------");
 
     }
 }

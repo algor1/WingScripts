@@ -120,8 +120,11 @@ namespace SpaceObjects
                 {
                     Fire(sqrDistance);
                     reloaded = false;
-                    await Reload();
+                
                 }
+                if (!reloaded)
+                    await Reload();
+
             }
         }
 
