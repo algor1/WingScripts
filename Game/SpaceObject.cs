@@ -3,7 +3,6 @@ using DarkRift;
 
 namespace SpaceObjects
 {
-    public enum TypeSO { asteroid, ship, station, waypoint, container };
 
     public class SpaceObject :IDarkRiftSerializable
     {
