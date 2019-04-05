@@ -93,6 +93,8 @@ namespace SpaceObjects
         protected virtual void OnLand(LandEventArgs e)
         {
             EventHandler<LandEventArgs> handler = ShipLanded;
+            handler?.Invoke(this, e);
+
         }
         private void OnLandCall(int ship_id)
         {
@@ -106,6 +108,8 @@ namespace SpaceObjects
         protected virtual void OnDestroy(DestroyEventArgs e)
         {
             EventHandler<DestroyEventArgs> handler = ShipDestroyed;
+            handler?.Invoke(this, e);
+
         }
         private void OnDestroyCall(int ship_id)
         {
@@ -117,6 +121,8 @@ namespace SpaceObjects
         protected virtual void OnSpawn(SpawnEventArgs e)
         {
             EventHandler<SpawnEventArgs> handler = ShipSpawn;
+            handler?.Invoke(this, e);
+
         }
         private void OnSpawnCall(int ship_id)
         {
@@ -129,6 +135,8 @@ namespace SpaceObjects
         protected virtual void OnChangeState(ChangeStateArgs e)
         {
             EventHandler<ChangeStateArgs> handler = ChangeState;
+            handler?.Invoke(this, e);
+
         }
         private void OnChangeStateCall(ShipEvenentsType _eventType)
         {
