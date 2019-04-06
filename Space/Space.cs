@@ -93,7 +93,7 @@ public class Space : MonoBehaviour
         GameManager.onPlayerShipData -= InitSpace; //?? 
         GameManager.onPlayerShipData += UpdatePlayer; //?? 
         GameManager.onNearestShipCommand += SendShipCommand;
-        GameManager.onShipDestroyed += DestroyShip;
+        GameManager.onShipDestroyed += DestroyShipCallFromServer;
     }
     void UpdatePlayer(ShipData shipData)
     {
@@ -167,13 +167,16 @@ public class Space : MonoBehaviour
     }
     public void DestroyShip(int ship_id)
     {
+        DeleteShip(ship_id);
+    }
+    public void DestroyShipCallFromServer(int ship_id)
+    {
         if (nearestShips.ContainsKey(ship_id))
         {
             DestroyEventArgs args = new DestroyEventArgs();
             args.ship_id = ship_id;
             nearestShips[ship_id].GetComponent<ShipMotor>().thisShip.Destroyed();
         }
-        DeleteShip(ship_id);
     }
 
     void UpdateShip(ShipData shipData)

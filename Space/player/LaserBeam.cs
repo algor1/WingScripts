@@ -30,13 +30,8 @@ public class LaserBeam : MonoBehaviour {
 			}
 		}
 		if (target == null) {
-//
-//			// TODO разобраться с выключением
-//			bool u= (target==null);
-////			Debug.Log ("target nulll " + target+ u);
-//			stoplaser ();// почемуто сразу выключает лазер
+            stoplaser();
 		}
-//		yield return new WaitForSeconds(1);
 
 	}
 

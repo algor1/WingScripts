@@ -91,7 +91,7 @@ public class ShipMotor : MonoBehaviour
     }
     void Explode()
     {
-        GameObject explosion = (GameObject)Instantiate(Resources.Load("prefabs/BigExplosion", typeof(GameObject)), transform);
+        GameObject explosion = (GameObject)Instantiate(Resources.Load("prefabs/BigExplosion", typeof(GameObject)), transform.position,transform.rotation);
     }
 
 
