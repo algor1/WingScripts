@@ -5,6 +5,7 @@ using DarkRiftTags;
 using Launcher;
 using UnityEngine;
 using SpaceObjects;
+using System;
 
 //namespace Game
 //{
@@ -19,13 +20,15 @@ public class GameManager : MonoBehaviour
 
     public delegate void PlayerShipDataEventHandler(ShipData shipData);
     public delegate void NearestShipCommandEventHandler(int ship_id, ShipCommand command, int target , int point);
-
+    public delegate void ShipDestroyedHandler(int shipId);
 
 
     public static event NearestShipsDataEventHandler onNearestShipData;
     public static event NearestSpaceObjectEventHandler onNearestSpaceObject;
     public static event PlayerShipDataEventHandler onPlayerShipData;
     public static event NearestShipCommandEventHandler onNearestShipCommand;
+    public static event ShipDestroyedHandler onShipDestroyed;
+
 
 
 
@@ -132,6 +135,15 @@ public class GameManager : MonoBehaviour
                             int target_id = reader.ReadInt32();
                             int point_id = reader.ReadInt32();
                             onNearestShipCommand?.Invoke(shipId,command,target_id,point_id);
+                        }
+                        break;
+                    }
+                case GameTags.ShipDestroyed:
+                    {
+                        using (var reader = message.GetReader())
+                        {
+                            int shipId = reader.ReadInt32();
+                            onShipDestroyed?.Invoke(shipId);
                         }
                         break;
                     }

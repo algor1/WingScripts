@@ -56,6 +56,7 @@ public class ShipMotor : MonoBehaviour
     private void SignOnShipEvents()
     {
         thisShip.ChangeState += ShipAnimationEvents;
+        thisShip.ShipDestroyed += ShipDestroyed;
     }
 
 
@@ -87,6 +88,10 @@ public class ShipMotor : MonoBehaviour
     void PerformMove()
     {
         transform.position = thisShip.p.Position - spaceManager.GetComponent<Space>().GetZeroPoint();
+    }
+    void Explode()
+    {
+        GameObject explosion = (GameObject)Instantiate(Resources.Load("prefabs/BigExplosion", typeof(GameObject)), transform);
     }
 
 
@@ -208,6 +213,13 @@ public class ShipMotor : MonoBehaviour
     //	}
     //}
     #endregion
+
+
+    private void ShipDestroyed(object sender, DestroyEventArgs e)
+    {
+        Explode();
+        spaceManager.GetComponent<Space>().DestroyShip(e.ship_id);
+    }
 
     private void ShipAnimationEvents(object sender, ChangeStateArgs e)
     {

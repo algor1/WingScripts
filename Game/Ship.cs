@@ -457,7 +457,7 @@ namespace SpaceObjects
                 await Task.Delay(RestoreTickDeltaTime);
             }
         }
-        private void Destroyed()
+        public void Destroyed()
         {
             p.Destroyed = true;
             for (int i = 0; i < Weapons.Length; i++)

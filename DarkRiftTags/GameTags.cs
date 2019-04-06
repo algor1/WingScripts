@@ -12,5 +12,6 @@
         public const ushort PlayerShipData = 5 + Shift;
         public const ushort NearestSpaceObjects = 6 + Shift;
         public const ushort ShipCommand = 7 + Shift;
+        public const ushort ShipDestroyed = 8 + Shift;
     }
 }
