@@ -28,7 +28,7 @@ namespace SpaceObjects
 
         public SpaceObject TargetToAtack {get;private set;}
         public SpaceObject NewTargetToAtack {get;private set;}
-        public enum MoveType { move, warp, stop };
+        public enum MoveType { move, warp, stop, warmwarp };
         private MoveType moveCommand;
         
         private ComandType complexCommand;
@@ -308,7 +308,8 @@ namespace SpaceObjects
             }
             if (complexCommand == ComandType.warpTo)
             {
-                moveCommand = MoveType.warp;
+                moveCommand = MoveType.warmwarp;
+                Warpdrive();
             }
             if (complexCommand == ComandType.landTo)
             {
@@ -391,7 +392,7 @@ namespace SpaceObjects
         }
         private void Move()
         {
-            if (moveCommand == MoveType.move)
+            if (moveCommand == MoveType.move|| moveCommand==MoveType.warmwarp)
             {
                 p.SpeedNew = p.SpeedMax;
                 Rotate();
@@ -490,12 +491,19 @@ namespace SpaceObjects
         //        }
         //    }
         //}
+
+
+
+
         public async Task Warpdrive()
         {
-            
+            if (moveCommand != MoveType.warmwarp) return;
             warpStarted = true;
             OnChangeStateCall(ShipEvenentsType.warmwarp);
             await Task.Delay((int)(1000f*p.WarpDriveStartTime));
+
+            if (moveCommand != MoveType.warmwarp) return;
+            moveCommand = MoveType.warp;
             float warpDistance = Vector3.Distance(p.Position, TargetToMove.Position);
             float warpTime = warpDistance / p.WarpSpeed;
             OnChangeStateCall(ShipEvenentsType.warp);
