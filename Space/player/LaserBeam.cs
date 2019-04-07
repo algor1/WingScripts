@@ -20,7 +20,6 @@ public class LaserBeam : MonoBehaviour {
 
 	}
 
-	// Update is called once per frame
 	void Update () {
 		if (laser_shot.enabled  && target!=null) {
 			//Debug.Log("from "+ transform.position+ "!!!!!!!!pew to " + target);
@@ -45,37 +44,7 @@ public class LaserBeam : MonoBehaviour {
 		laser_shot.endWidth=0.03f;
 	}
 
-//	public void fireLaser ()
-//	{
-////		print ("fire");
-//		if (player.GetComponent<ShipMotor> ().selectedTarget == null) {
-//			laser_enabled = false;
-////			print ("fire1");
-//		} else{
-//			if (target == player.GetComponent<ShipMotor> ().selectedTarget && laser_enabled) {
-//				laser_enabled =false;
-////				print ("fire2");
-//			} else {
-////				print ("fire3");
-//				target = player.GetComponent<ShipMotor> ().selectedTarget;
-//
-//				StartCoroutine (fire ());
-//			}
-//		}
-//	}
 
-//	IEnumerator fire()
-//	{
-//		laser_enabled = true;
-//		while (laser_enabled) {
-//			laser_shot.enabled = true;
-//			laser_shot.SetPosition(0, transform.position);
-//			laser_shot.SetPosition(1, target.transform.position);
-//			yield return new WaitForSeconds(0.7f);
-//			stoplaser ();
-//			yield return new WaitForSeconds(1.7f);
-//		}
-//	}
 
 
 	void stoplaser(){
